@@ -16,34 +16,39 @@ import javax.persistence.Id;
  * @author carl
  */
 @Entity
-public class Student implements Serializable {
+public class MyUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
     private String password;
-    private String name;
-    private String email;
-    private String major;
-    private Character gender;
-    private Integer year_of_birth;
+    private String name; 
+    private String email; 
+    private String major; 
+    private Character gender; 
+    private Integer yearOfBirth;
+    private String role;
+    private String manifesto;
+    private String skills; 
 
-    public Student() {
+    public MyUser() {
     }
 
-    public Student(String id, String password, String name, String email, String major, Character gender, Integer year_of_birth) {
+    public MyUser(String id, String password, String name, String email, String major, Character gender, Integer yearOfBirth, String role, String manifesto, String skills) {
         this.id = id;
         this.password = password;
         this.name = name;
         this.email = email;
         this.major = major;
         this.gender = gender;
-        this.year_of_birth = year_of_birth;
+        this.yearOfBirth = yearOfBirth;
+        this.role = role;
+        this.manifesto = manifesto;
+        this.skills = skills;
     }
 
-    
-    
+
     public String getPassword() {
         return password;
     }
@@ -68,6 +73,22 @@ public class Student implements Serializable {
         this.email = email;
     }
 
+    public String getManifesto() {
+        return manifesto;
+    }
+
+    public void setManifesto(String manifesto) {
+        this.manifesto = manifesto;
+    }
+
+    public String getSkills() {
+        return skills;
+    }
+
+    public void setSkills(String skills) {
+        this.skills = skills;
+    }
+
     public String getMajor() {
         return major;
     }
@@ -84,12 +105,20 @@ public class Student implements Serializable {
         this.gender = gender;
     }
 
-    public Integer getYear_of_birth() {
-        return year_of_birth;
+    public Integer getYearOfBirth() {
+        return yearOfBirth;
     }
 
-    public void setYear_of_birth(Integer year_of_birth) {
-        this.year_of_birth = year_of_birth;
+    public void setYearOfBirth(Integer yearOfBirth) {
+        this.yearOfBirth = yearOfBirth;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
     
     
@@ -112,10 +141,10 @@ public class Student implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Student)) {
+        if (!(object instanceof MyUser)) {
             return false;
         }
-        Student other = (Student) object;
+        MyUser other = (MyUser) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -124,7 +153,7 @@ public class Student implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Student[ id=" + id + " ]";
+        return "model.User[ id=" + id + " ]";
     }
     
 }

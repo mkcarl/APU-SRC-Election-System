@@ -24,16 +24,16 @@ public class Vote implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @ManyToOne
-    private Student voted_by;
+    private MyUser voted_by;
     @ManyToOne
     private Seat voted_for;
     private Long time_voted;
 
-    public Student getVoted_by() {
+    public MyUser getVoted_by() {
         return voted_by;
     }
 
-    public void setVoted_by(Student voted_by) {
+    public void setVoted_by(MyUser voted_by) {
         this.voted_by = voted_by;
     }
 

@@ -14,7 +14,7 @@ import javax.persistence.PersistenceContext;
  * @author carl
  */
 @Stateless
-public class CommitteeFacade extends AbstractFacade<Committee> {
+public class UserFacade extends AbstractFacade<MyUser> {
 
     @PersistenceContext(unitName = "EnterpriseApplication1-ejbPU")
     private EntityManager em;
@@ -24,8 +24,8 @@ public class CommitteeFacade extends AbstractFacade<Committee> {
         return em;
     }
 
-    public CommitteeFacade() {
-        super(Committee.class);
+    public UserFacade() {
+        super(MyUser.class);
     }
     
 }

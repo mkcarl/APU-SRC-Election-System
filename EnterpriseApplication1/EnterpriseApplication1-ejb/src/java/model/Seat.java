@@ -25,15 +25,15 @@ public class Seat implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @OneToOne
-    private Contestant contested_by; 
+    private MyUser contested_by; 
     @ManyToOne
     private Position seat_for;
 
-    public Contestant getContested_by() {
+    public MyUser getContested_by() {
         return contested_by;
     }
 
-    public void setContested_by(Contestant contested_by) {
+    public void setContested_by(MyUser contested_by) {
         this.contested_by = contested_by;
     }
 
