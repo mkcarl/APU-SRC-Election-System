@@ -16,7 +16,7 @@
         <nav class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="./">
-                    <img src="assets/apu_logo.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+                    <img src="/EnterpriseApplication1-war/assets/apu_logo.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
                     APU SRC Election 2022
                 </a>
                 <div class="navbar-nav">
