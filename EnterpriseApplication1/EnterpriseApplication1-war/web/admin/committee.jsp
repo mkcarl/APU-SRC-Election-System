@@ -4,6 +4,8 @@
     Author     : carl
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -20,32 +22,81 @@
                 height: 90vh;
                 width: 100%;
             }
+            
+            #action-input{
+                width: 20rem;
+            }
+            #actions{
+                display: flex;
+                flex-direction: row;
+                gap:10px;
+                justify-content: flex-end;
+            }
         </style>
     </head>
     <body>
         <jsp:include page="../banner.jsp"/>
+        <sql:setDataSource 
+            var="myDS"
+            driver="org.apache.derby.jdbc.ClientDriver"
+            url="jdbc:derby://localhost:1527/sample"
+            user="app"
+            password="app"
+            />
+        <!--if parameter exist-->
+        <c:if test="${param.search != null}">
+            <sql:query var="committee_list" dataSource="${myDS}">
+            SELECT * FROM myuser WHERE role = 'committee' and id = '${param.search}'
+        </sql:query>
+        </c:if>
+        <c:if test="${param.search == null}">
+            <sql:query var="committee_list" dataSource="${myDS}">
+                SELECT * FROM myuser WHERE role = 'committee'
+            </sql:query>
+        </c:if>
         <div class="main">
             <div class="title">
                 <h1>Committee</h1>
             </div>
             <div class="main-table">
-                <button class="btn btn-success">Add</button>
-                <button class="btn btn-warning">Edit</button>
-                <button class="btn btn-danger">Delete</button>
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <td>ID</td>
-                        <td>Password</td>
-                        <td>Full name</td>
-                        <td>Email</td>
-                        <td>Gender</td> 
-                   </tr>
-                    </thead>
-                    <tbody>
-                        <!--display records from database-->
-                    </tbody>
-                </table>
+                <form >
+                    <div id="actions">
+                        <input id="action-input" type="text" class="form-control" placeholder="eg: comm1">
+                        <button type="submit" class="btn btn-primary" name="submit" value="search">Search</button>
+                        <button type="submit" class="btn btn-success" name="submit" value="add">Add</button>
+                        <button type="submit" class="btn btn-warning" name="submit" value="edit">Edit</button>
+                        <button type="submit" class="btn btn-danger" name="submit" value="delete">Delete</button>
+
+                    </div>
+                </form>
+                <div>
+                    
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td>ID</td>
+                                <td>Password</td>
+                                <td>Full name</td>
+                                <td>Email</td>
+                                <td>Gender</td> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--display records from database-->
+                            <c:forEach var="committee" items="${committee_list.rows}">
+                                <tr>
+                                    <td><c:out value="${committee.id}"></c:out></td>
+                                    <td><c:out value="${committee.password}"></c:out></td>
+                                    <td><c:out value="${committee.name}"></c:out></td>
+                                    <td><c:out value="${committee.email}"></c:out></td>
+                                    <td><c:out value="${committee.gender}"></c:out></td>
+
+                                    </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+
+                </div>
 
             </div>
         </div>
