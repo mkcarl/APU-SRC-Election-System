@@ -45,14 +45,13 @@
         <div class="center">
 
             <h1>Login page</h1>
-            <form>
+            <form action="Login" method="POST">
                 <label for="username" class="form-label">Username:</label>
-                <input id="username" type="text" class="form-control">
+                <input id="username" name="username" type="text" class="form-control">
                 <label for="password" class="form-label">Password:</label>
-                <input id="password" type="password" class="form-control">
+                <input id="password" name="password" type="password" class="form-control">
 
-                <%request.getSession().setAttribute("message", "message here");%>
-
+                
                 <%
                     if (request.getSession().getAttribute("message") != null) {
                 %>
@@ -64,7 +63,7 @@
                 %>
 
                 <div class="submit-div">
-                    <button type="submit" name="submit" value="login" class="btn btn-primary">Login</button>
+                    <button type="submit" class="btn btn-primary" >Login</button>
                 </div>
 
             </form>

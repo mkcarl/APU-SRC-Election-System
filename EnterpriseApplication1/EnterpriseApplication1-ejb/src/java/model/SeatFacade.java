@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author carl
+ * @author munky
  */
 @Stateless
 public class SeatFacade extends AbstractFacade<Seat> {

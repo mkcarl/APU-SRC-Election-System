@@ -4,6 +4,7 @@
     Author     : munky
 --%>
 
+<%@page import="model.MyUser"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -27,21 +28,23 @@
         <jsp:include page="banner.jsp"/>
         <div class="main">
             <%
-                if (request.getSession().getAttribute("login") == null){
+                 if (request.getSession().getAttribute("login") == null){
                     // if no user found
             %>
+            <h1>no user found</h1>
             <%
-                } else if (((User) request.getSession().getAttribute("login")).getRole() == "admin") {
+                } else if (((MyUser) request.getSession().getAttribute("login")).getRole().equals("admin")) {
                     // if user role is admin
             %>
+            <h1>welcome admin</h1>
             <%
 
-        } else if (((User) request.getSession().getAttribute("login")).getRole() == "contestant") {
+        } else if (((MyUser) request.getSession().getAttribute("login")).getRole().equals("contestant")) {
                     // if user role is constestant
             %>
             <%
 
-        } else if (((User) request.getSession().getAttribute("login")).getRole() == "student") {
+        } else if (((MyUser) request.getSession().getAttribute("login")).getRole().equals("student")) {
                     // if user role is student
             %>
             <%
@@ -52,7 +55,6 @@
 
         </div>
 
-        <h1>Hello World!</h1>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
     </body>

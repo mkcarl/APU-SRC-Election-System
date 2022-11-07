@@ -10,33 +10,36 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
- * @author carl
+ * @author munky
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "MyUser.findUsername", query = "SELECT u FROM MyUser u WHERE u.username = :username"),
+})
 public class MyUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Long id;
+    private String username;
     private String password;
-    private String name; 
-    private String email; 
-    private String major; 
-    private Character gender; 
+    private String name;
+    private String email;
+    private String major;
+    private Character gender;
     private Integer yearOfBirth;
     private String role;
     private String manifesto;
-    private String skills; 
+    private String skills;
 
-    public MyUser() {
-    }
-
-    public MyUser(String id, String password, String name, String email, String major, Character gender, Integer yearOfBirth, String role, String manifesto, String skills) {
-        this.id = id;
+    public MyUser(String username, String password, String name, String email, String major, Character gender, Integer yearOfBirth, String role, String manifesto, String skills) {
+        this.username = username;
         this.password = password;
         this.name = name;
         this.email = email;
@@ -48,6 +51,16 @@ public class MyUser implements Serializable {
         this.skills = skills;
     }
 
+    public MyUser() {
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public String getPassword() {
         return password;
@@ -71,22 +84,6 @@ public class MyUser implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getManifesto() {
-        return manifesto;
-    }
-
-    public void setManifesto(String manifesto) {
-        this.manifesto = manifesto;
-    }
-
-    public String getSkills() {
-        return skills;
-    }
-
-    public void setSkills(String skills) {
-        this.skills = skills;
     }
 
     public String getMajor() {
@@ -120,14 +117,30 @@ public class MyUser implements Serializable {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public String getManifesto() {
+        return manifesto;
+    }
+
+    public void setManifesto(String manifesto) {
+        this.manifesto = manifesto;
+    }
+
+    public String getSkills() {
+        return skills;
+    }
+
+    public void setSkills(String skills) {
+        this.skills = skills;
+    }
     
     
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -153,7 +166,7 @@ public class MyUser implements Serializable {
 
     @Override
     public String toString() {
-        return "model.User[ id=" + id + " ]";
+        return "model.MyUser[ id=" + id + " ]";
     }
-    
+
 }
