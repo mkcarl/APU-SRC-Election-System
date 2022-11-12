@@ -34,7 +34,7 @@
         <div class="center">
             <h1>APU SRC is holding their annual election. Come cast your vote!</h1>
             <div>
-                <a type="button" class="btn btn-primary">Register</a>
+                <a type="button" class="btn btn-primary" href="registration.jsp">Register</a>
                 <a type="button" class="btn btn-primary" href="login.jsp">Login</a>
             </div>
 

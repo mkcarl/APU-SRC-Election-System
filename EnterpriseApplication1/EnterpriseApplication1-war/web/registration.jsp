@@ -45,21 +45,21 @@
         <div class="center">
             
             <h1>Registration page</h1>
-            <form>
+            <form action="Registration" method="POST">
                 <label for="username" class="form-label">Username:</label>
-                <input id="username" type="text" class="form-control">
+                <input id="username" name="username" type="text" class="form-control">
                 <label for="password" class="form-label">Password:</label>
-                <input id="password" type="password" class="form-control">
+                <input id="password" name="password" type="password" class="form-control">
                 <label for="name" class="form-label">Full name:</label>
-                <input id="name" type="text" class="form-control">
+                <input id="name" name="name" type="text" class="form-control">
                 <label for="email" class="form-label">Email address:</label>
-                <input id="email" type="email" class="form-control">
-                <label for="major" class="form-label">Majoring in:</label>
-                <input id="major" type="text" class="form-control">
-                <label for="yob" class="form-label">Year of birth:</label>
-                <input id="yob" type="number" class="form-control">
-                
-                <%request.getSession().setAttribute("message","message here");%>
+                <input id="email" name="email" type="email" class="form-control">
+                <label for="gender" class="form-label">Gender:</label>
+                <input id="gender" name="gender" type="text" class="form-control">
+                <label for="major" class="form-label">Major:</label>
+                <input id="major" name="major" type="text" class="form-control">
+                <label for="yob" class="form-label">Year of Birth:</label>
+                <input id="yob" name="yob" type="text" class="form-control">
                 
                 <%
                 if(request.getSession().getAttribute("message") != null){
@@ -73,7 +73,7 @@
                     
                 <div class="submit-div">
                     <button type="submit" name="submit" value="student" class="btn btn-primary">Register as student</button>
-                    <button type="submit" name="submit" value="contestor" class="btn btn-primary">Register as contestor</button>
+                    <button type="submit" name="submit" value="contestant" class="btn btn-primary">Register as contestant</button>
                 </div>
 
             </form>
