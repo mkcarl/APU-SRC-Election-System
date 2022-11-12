@@ -4,6 +4,12 @@
     Author     : carl
 --%>
 
+<%@page import="java.util.Vector"%>
+<%@page import="java.util.Enumeration"%>
+<%@page import="java.util.Collections"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="model.MyUser"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -51,16 +57,8 @@
             password="app"
             />
         <!--if parameter exist-->
-        <c:if test="${param.search != null}">
-            <sql:query var="committee_list" dataSource="${myDS}">
-                SELECT * FROM myuser WHERE role = 'committee' and id = '${param.search}'
-            </sql:query>
-        </c:if>
-        <c:if test="${param.search == null}">
-            <sql:query var="committee_list" dataSource="${myDS}">
-                SELECT * FROM myuser WHERE role = 'committee'
-            </sql:query>
-        </c:if>
+
+
         <div class="main">
             <div class="title">
                 <h1>Committee</h1>
@@ -74,9 +72,8 @@
                             <button type="submit" class="btn btn-warning" formaction="EditCommittee" formmethod="POST">Edit</button>
                             <button type="submit" class="btn btn-danger" formaction="DeleteCommittee" formmethod="POST">Delete</button>
                         </div>
-                      
-                        <%
-                            if (request.getSession().getAttribute("message") != null) {
+
+                        <%                            if (request.getSession().getAttribute("message") != null) {
                         %>
                         <p class="message"><%=request.getSession().getAttribute("message")%></p>
 
@@ -89,7 +86,7 @@
 
                     <form >
                         <div id="actions">
-                            <input id="action-input" type="text" class="form-control" placeholder="eg: comm1">
+                            <input id="action-input" name="username" type="text" class="form-control" placeholder="eg: comm1">
                             <!--                        <select>
                                                         <option value="id">ID</option>
                                                         <option value="username">Username</option>
@@ -97,7 +94,7 @@
                                                         <option value="gender">Gender</option>
                         
                                                     </select>-->
-                            <button type="submit" class="btn btn-primary" name="submit" value="search">Search</button>
+                            <button type="submit" class="btn btn-primary" formaction="SearchCommittee" formmethod="POST">Search</button>
                         </div>
                     </form>
 
@@ -117,17 +114,39 @@
                         </thead>
                         <tbody>
                             <!--display records from database-->
-                            <c:forEach var="committee" items="${committee_list.rows}">
-                                <tr>
-                                    <td><c:out value="${committee.id}"></c:out></td>
-                                    <td><c:out value="${committee.username}"></c:out></td>
-                                    <td><c:out value="${committee.password}"></c:out></td>
-                                    <td><c:out value="${committee.name}"></c:out></td>
-                                    <td><c:out value="${committee.email}"></c:out></td>
-                                    <td><c:out value="${committee.gender}"></c:out></td>
+                            <c:if test="<%= request.getSession().getAttribute("search") == null%>">
+                                <sql:query var="all_committee" dataSource="${myDS}">
+                                    SELECT * FROM myuser WHERE role = 'committee'
+                                </sql:query>
+                                <c:forEach var="committee" items="${all_committee.rows}">
+                                    <tr>
+                                        <td><c:out value="${committee.id}"></c:out></td>
+                                        <td><c:out value="${committee.username}"></c:out></td>
+                                        <td><c:out value="${committee.password}"></c:out></td>
+                                        <td><c:out value="${committee.name}"></c:out></td>
+                                        <td><c:out value="${committee.email}"></c:out></td>
+                                        <td><c:out value="${committee.gender}"></c:out></td>
 
-                                    </tr>
-                            </c:forEach>
+                                        </tr>
+                                </c:forEach>
+                            </c:if>
+                            <c:if test="<%= request.getSession().getAttribute("search") != null%>">
+                                <c:set var="committee_list" value="${sessionScope.search}"></c:set>
+
+                                <c:forEach var="committee" items="${committee_list}">
+                                    <tr>
+                                        <td><c:out value="${committee.getId()}"></c:out></td>
+                                        <td><c:out value="${committee.getUsername()}"></c:out></td>
+                                        <td><c:out value="${committee.getPassword()}"></c:out></td>
+                                        <td><c:out value="${committee.getName()}"></c:out></td>
+                                        <td><c:out value="${committee.getEmail()}"></c:out></td>
+                                        <td><c:out value="${committee.getGender()}"></c:out></td>
+
+                                        </tr>
+                                </c:forEach>
+
+                            </c:if>  
+
                         </tbody>
                     </table>
 
@@ -136,5 +155,7 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+        <%request.getSession().removeAttribute("search");%>
+
     </body>
 </html>

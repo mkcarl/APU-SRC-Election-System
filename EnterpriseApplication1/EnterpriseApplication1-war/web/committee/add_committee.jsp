@@ -67,7 +67,7 @@
                     
                 <div class="submit-div">
                     <button type="submit" class="btn btn-primary">Register</button>
-                    <a type="button" class="btn btn-secondary">Cancel</a>
+                    <a type="submit" class="btn btn-secondary" href="committee.jsp">Cancel</a>
                 </div>
 
             </form>

@@ -30,6 +30,16 @@ public class MyUserFacade extends AbstractFacade<MyUser> {
         super(MyUser.class);
     }
     
+    
+   public List<MyUser> findAllUsernameSimilarTo(String username){
+        Query query = em.createNamedQuery("MyUser.findAllUsernameSimilarTo");
+        query.setParameter("username", "%" + username + "%");
+        List<MyUser> all = query.getResultList(); 
+
+        return all; 
+        
+    }
+    
     public MyUser findUsername(String username){
         MyUser found = null; 
         
