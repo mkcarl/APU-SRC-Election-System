@@ -72,7 +72,7 @@
                             <input id="id" name="id" type="text" class="form-control" placeholder="eg: comm1">
                             <a type="button" class="btn btn-success" href="add_committee.jsp">Add</a>
                             <button type="submit" class="btn btn-warning" formaction="EditCommittee" formmethod="POST">Edit</button>
-                            <button type="submit" class="btn btn-danger" name="submit" value="delete">Delete</button>
+                            <button type="submit" class="btn btn-danger" formaction="DeleteCommittee" formmethod="POST">Delete</button>
                         </div>
                       
                         <%
