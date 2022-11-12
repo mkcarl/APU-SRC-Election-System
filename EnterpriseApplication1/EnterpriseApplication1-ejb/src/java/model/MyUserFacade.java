@@ -31,8 +31,8 @@ public class MyUserFacade extends AbstractFacade<MyUser> {
     }
     
     
-   public List<MyUser> findAllUsernameSimilarTo(String username){
-        Query query = em.createNamedQuery("MyUser.findAllUsernameSimilarTo");
+   public List<MyUser> findAllCommitteeUsernameSimilarTo(String username){
+        Query query = em.createNamedQuery("MyUser.findAllCommitteeUsernameSimilarTo");
         query.setParameter("username", "%" + username + "%");
         List<MyUser> all = query.getResultList(); 
 
@@ -53,5 +53,7 @@ public class MyUserFacade extends AbstractFacade<MyUser> {
         return found; 
         
     }
+    
+    
     
 }
