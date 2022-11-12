@@ -36,6 +36,9 @@
                 display: flex; 
                 justify-content: space-between;
             }
+            .message{
+                color: red;
+            }
         </style>
     </head>
     <body>
@@ -66,29 +69,39 @@
                 <div class="controls">
                     <form >
                         <div id="actions">
-                            <input id="action-input" type="text" class="form-control" placeholder="eg: comm1">
+                            <input id="id" name="id" type="text" class="form-control" placeholder="eg: comm1">
                             <a type="button" class="btn btn-success" href="add_committee.jsp">Add</a>
-                            <button type="submit" class="btn btn-warning" name="submit" value="edit">Edit</button>
+                            <button type="submit" class="btn btn-warning" formaction="EditCommittee" formmethod="POST">Edit</button>
                             <button type="submit" class="btn btn-danger" name="submit" value="delete">Delete</button>
                         </div>
+                      
+                        <%
+                            if (request.getSession().getAttribute("message") != null) {
+                        %>
+                        <p class="message"><%=request.getSession().getAttribute("message")%></p>
+
+                        <%
+                                request.getSession().removeAttribute("message");
+                            }
+                        %>
                     </form>
-                    
-                    
+
+
                     <form >
                         <div id="actions">
                             <input id="action-input" type="text" class="form-control" placeholder="eg: comm1">
-    <!--                        <select>
-                                <option value="id">ID</option>
-                                <option value="username">Username</option>
-                                <option value="fullname">Full name</option>
-                                <option value="gender">Gender</option>
-
-                            </select>-->
+                            <!--                        <select>
+                                                        <option value="id">ID</option>
+                                                        <option value="username">Username</option>
+                                                        <option value="fullname">Full name</option>
+                                                        <option value="gender">Gender</option>
+                        
+                                                    </select>-->
                             <button type="submit" class="btn btn-primary" name="submit" value="search">Search</button>
                         </div>
                     </form>
-                    
-                    
+
+
                 </div>
                 <div>
                     <table class="table">

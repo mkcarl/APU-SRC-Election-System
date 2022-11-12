@@ -21,8 +21,8 @@ import model.MyUserFacade;
  *
  * @author munky
  */
-@WebServlet(name = "AddCommittee", urlPatterns = {"/committee/AddCommittee"})
-public class AddCommittee extends HttpServlet {
+@WebServlet(name = "EditCommittee", urlPatterns = {"/committee/EditCommittee"})
+public class EditCommittee extends HttpServlet {
 
     @EJB
     private MyUserFacade myUserFacade;
@@ -39,32 +39,21 @@ public class AddCommittee extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String fullname = request.getParameter("name");
-        String email = request.getParameter("email");
-        char gender = request.getParameter("gender").charAt(0);
-        
         HttpSession session = request.getSession();
+        long id = Long.parseLong(request.getParameter("id"));
+        System.out.println(String.format("id is %d", id));
+        MyUser found = myUserFacade.find(id);
 
-        if (myUserFacade.findUsername(username) != null){
-            // username taken
-            session.setAttribute("message", String.format("Username \"%s\" already exist, please try again with another username", username));
-            request.getRequestDispatcher("add_committee.jsp").include(request, response);
+        if (found != null) {
+            session.setAttribute("edit", found);
+            request.getRequestDispatcher("edit_committee.jsp").include(request, response);
 
-        } else{
-            MyUser newUser = new MyUser(username, password, fullname, email, null, gender, null, "committee", null, null);
-
-            myUserFacade.create(newUser);  
-            
-            request.getRequestDispatcher("committee.jsp").forward(request, response);
+        } else {
+            session.setAttribute("message", String.format("User with ID \"%d\" not found ", id));
+            request.getRequestDispatcher("committee.jsp").include(request, response);
 
         }
-        
-        
-        
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

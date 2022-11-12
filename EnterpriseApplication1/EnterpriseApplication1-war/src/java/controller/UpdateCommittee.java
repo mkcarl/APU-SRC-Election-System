@@ -13,7 +13,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import model.MyUser;
 import model.MyUserFacade;
 
@@ -21,8 +20,8 @@ import model.MyUserFacade;
  *
  * @author munky
  */
-@WebServlet(name = "AddCommittee", urlPatterns = {"/committee/AddCommittee"})
-public class AddCommittee extends HttpServlet {
+@WebServlet(name = "UpdateCommittee", urlPatterns = {"/committee/UpdateCommittee"})
+public class UpdateCommittee extends HttpServlet {
 
     @EJB
     private MyUserFacade myUserFacade;
@@ -39,32 +38,26 @@ public class AddCommittee extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+        long id = Long.parseLong(request.getParameter("id")) ;
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String fullname = request.getParameter("name");
         String email = request.getParameter("email");
         char gender = request.getParameter("gender").charAt(0);
         
-        HttpSession session = request.getSession();
-
-        if (myUserFacade.findUsername(username) != null){
-            // username taken
-            session.setAttribute("message", String.format("Username \"%s\" already exist, please try again with another username", username));
-            request.getRequestDispatcher("add_committee.jsp").include(request, response);
-
-        } else{
-            MyUser newUser = new MyUser(username, password, fullname, email, null, gender, null, "committee", null, null);
-
-            myUserFacade.create(newUser);  
-            
-            request.getRequestDispatcher("committee.jsp").forward(request, response);
-
-        }
+        System.out.println(id);
+        MyUser edited = myUserFacade.find(id);
         
+        edited.setUsername(username);
+        edited.setPassword(password);
+        edited.setName(fullname);
+        edited.setEmail(email);
+        edited.setGender(gender);
         
-        
-        
+        myUserFacade.edit(edited);
+
+        request.getRequestDispatcher("committee.jsp").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

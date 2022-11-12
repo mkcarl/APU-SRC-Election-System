@@ -4,6 +4,7 @@
     Author     : carl
 --%>
 
+<%@page import="model.MyUser"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -42,37 +43,24 @@
     </head>
     <body>
         <jsp:include page="../banner.jsp"/>
-        <sql:setDataSource 
-            var="myDS"
-            driver="org.apache.derby.jdbc.ClientDriver"
-            url="jdbc:derby://localhost:1527/sample"
-            user="app"
-            password="app"
-            />
-        <!--if parameter exist-->
-        <c:if test="${param.edit != null}">
-            <sql:query var="committee_list" dataSource="${myDS}">
-            SELECT * FROM myuser WHERE role = 'committee' and id = '${param.edit}'
-            </sql:query>
-        </c:if>
 
+        <% MyUser edit = (MyUser) request.getSession().getAttribute("edit"); %>
+        
         <div class="center">
             
-            <h1>Edit committee page</h1>
+            <h1>Edit committee</h1>
             <form>
                 <label for="username" class="form-label">Username:</label>
-                <input id="username" type="text" class="form-control"  value="${committee_list.rows[0].id}">
+                <input id="username" name="username" type="text" class="form-control"  value="${edit.username}">
                 <label for="password" class="form-label">Password:</label>
-                <input id="password" type="password" class="form-control" value="${committee_list.rows[0].password}" >
+                <input id="password" name="password" type="text" class="form-control" value="${edit.password}" >
                 <label for="name" class="form-label">Full name:</label>
-                <input id="name" type="text" class="form-control" value="${committee_list.rows[0].name}">
+                <input id="name" name="name" type="text" class="form-control" value="${edit.name}">
                 <label for="email" class="form-label">Email address:</label>
-                <input id="email" type="email" class="form-control" value="${committee_list.rows[0].email}">
+                <input id="email" name="email" type="email" class="form-control" value="${edit.email}">
                 <label for="gender" class="form-label">Gender:</label>
-                <input id="gender" type="text" class="form-control" value="${committee_list.rows[0].gender}">
-                
-                <%request.getSession().setAttribute("message","message here");%>
-                
+                <input id="gender" name="gender" type="text" class="form-control" value="${edit.gender}">
+                                
                 <%
                 if(request.getSession().getAttribute("message") != null){
                 %>
@@ -84,11 +72,14 @@
                 %>
                     
                 <div class="submit-div">
-                    <button type="submit" name="submit" value="student" class="btn btn-primary">Confirm</button>
-                    <button type="submit" name="submit" value="contestor" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" class="btn btn-primary" formaction="UpdateCommittee" formmethod="POST" name="id" value="${edit.id}">Confirm</button>
+                    <a type="submit" class="btn btn-secondary" href="committee.jsp">Cancel</a>
                 </div>
 
             </form>
+                <%
+                request.getSession().removeAttribute("edit");
+                %>
         </div>
 
 
