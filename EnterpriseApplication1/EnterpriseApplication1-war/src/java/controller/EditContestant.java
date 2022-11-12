@@ -21,10 +21,12 @@ import model.MyUserFacade;
  *
  * @author munky
  */
-@WebServlet(name = "AddStudent", urlPatterns = {"/committee/AddStudent"})
-public class AddStudent extends HttpServlet {
-@EJB
+@WebServlet(name = "EditContestant", urlPatterns = {"/committee/EditContestant"})
+public class EditContestant extends HttpServlet {
+
+    @EJB
     private MyUserFacade myUserFacade;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,27 +39,19 @@ public class AddStudent extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String fullname = request.getParameter("name");
-        String email = request.getParameter("email");
-        char gender = request.getParameter("gender").charAt(0);
-        String major = request.getParameter("major");
-        int yob = Integer.parseInt(request.getParameter("yob"));
-        
         HttpSession session = request.getSession();
+        long id = Long.parseLong(request.getParameter("id"));
+        System.out.println(String.format("id is %d", id));
+        MyUser found = myUserFacade.find(id);
+        // TODO : implement find by role 
 
-        if (myUserFacade.findUsername(username) != null){
-            // username taken
-            session.setAttribute("message", String.format("Username \"%s\" already exist, please try again with another username", username));
-            request.getRequestDispatcher("add_student.jsp").include(request, response);
+        if (found != null) {
+            session.setAttribute("edit", found);
+            request.getRequestDispatcher("edit_contestant.jsp").include(request, response);
 
-        } else{
-            MyUser newUser = new MyUser(username, password, fullname, email, major, gender, yob, "student", null, null);
-
-            myUserFacade.create(newUser);  
-            
-            request.getRequestDispatcher("student.jsp").forward(request, response);
+        } else {
+            session.setAttribute("message", String.format("User with ID \"%d\" not found ", id));
+            request.getRequestDispatcher("contestant.jsp").include(request, response);
 
         }
     }

@@ -7,6 +7,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,10 +22,12 @@ import model.MyUserFacade;
  *
  * @author munky
  */
-@WebServlet(name = "AddStudent", urlPatterns = {"/committee/AddStudent"})
-public class AddStudent extends HttpServlet {
-@EJB
+@WebServlet(name = "SearchContestant", urlPatterns = {"/committee/SearchContestant"})
+public class SearchContestant extends HttpServlet {
+
+    @EJB
     private MyUserFacade myUserFacade;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,29 +40,13 @@ public class AddStudent extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String fullname = request.getParameter("name");
-        String email = request.getParameter("email");
-        char gender = request.getParameter("gender").charAt(0);
-        String major = request.getParameter("major");
-        int yob = Integer.parseInt(request.getParameter("yob"));
-        
         HttpSession session = request.getSession();
 
-        if (myUserFacade.findUsername(username) != null){
-            // username taken
-            session.setAttribute("message", String.format("Username \"%s\" already exist, please try again with another username", username));
-            request.getRequestDispatcher("add_student.jsp").include(request, response);
-
-        } else{
-            MyUser newUser = new MyUser(username, password, fullname, email, major, gender, yob, "student", null, null);
-
-            myUserFacade.create(newUser);  
-            
-            request.getRequestDispatcher("student.jsp").forward(request, response);
-
-        }
+        String username = request.getParameter("username");
+        List<MyUser> all = myUserFacade.findAllContestantUsernameSimilarTo(username);
+        session.setAttribute("search", all);
+        request.getRequestDispatcher("contestant.jsp").include(request, response);
+    
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

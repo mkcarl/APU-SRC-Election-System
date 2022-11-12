@@ -23,7 +23,7 @@
                 <div class="navbar-nav">
                     <form>
                         <c:if test="<%= session.getAttribute("login") != null %>">
-                            <button type="submit" class="btn btn-outline-primary" formaction="Logout" formmethod="POST">Logout</button>
+                            <button type="submit" class="btn btn-outline-primary" formaction="/EnterpriseApplication1-war/Logout" formmethod="POST">Logout</button>
                         </c:if>
                         
                     </form>

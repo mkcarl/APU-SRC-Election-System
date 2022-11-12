@@ -21,10 +21,12 @@ import model.MyUserFacade;
  *
  * @author munky
  */
-@WebServlet(name = "AddStudent", urlPatterns = {"/committee/AddStudent"})
-public class AddStudent extends HttpServlet {
-@EJB
+@WebServlet(name = "AddContestant", urlPatterns = {"/committee/AddContestant"})
+public class AddContestant extends HttpServlet {
+
+    @EJB
     private MyUserFacade myUserFacade;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -44,20 +46,22 @@ public class AddStudent extends HttpServlet {
         char gender = request.getParameter("gender").charAt(0);
         String major = request.getParameter("major");
         int yob = Integer.parseInt(request.getParameter("yob"));
-        
+        String skill = request.getParameter("skill");
+        String manifesto = request.getParameter("manifesto");
+
         HttpSession session = request.getSession();
 
-        if (myUserFacade.findUsername(username) != null){
+        if (myUserFacade.findUsername(username) != null) {
             // username taken
             session.setAttribute("message", String.format("Username \"%s\" already exist, please try again with another username", username));
-            request.getRequestDispatcher("add_student.jsp").include(request, response);
+            request.getRequestDispatcher("add_contestant.jsp").include(request, response);
 
-        } else{
-            MyUser newUser = new MyUser(username, password, fullname, email, major, gender, yob, "student", null, null);
+        } else {
+            MyUser newUser = new MyUser(username, password, fullname, email, major, gender, yob, "contestant", manifesto, skill);
 
-            myUserFacade.create(newUser);  
-            
-            request.getRequestDispatcher("student.jsp").forward(request, response);
+            myUserFacade.create(newUser);
+
+            request.getRequestDispatcher("contestant.jsp").forward(request, response);
 
         }
     }

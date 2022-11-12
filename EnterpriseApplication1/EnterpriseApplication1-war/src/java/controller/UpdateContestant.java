@@ -13,7 +13,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import model.MyUser;
 import model.MyUserFacade;
 
@@ -21,10 +20,12 @@ import model.MyUserFacade;
  *
  * @author munky
  */
-@WebServlet(name = "AddStudent", urlPatterns = {"/committee/AddStudent"})
-public class AddStudent extends HttpServlet {
-@EJB
+@WebServlet(name = "UpdateContestant", urlPatterns = {"/committee/UpdateContestant"})
+public class UpdateContestant extends HttpServlet {
+
+    @EJB
     private MyUserFacade myUserFacade;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,6 +38,7 @@ public class AddStudent extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        long id = Long.parseLong(request.getParameter("id")) ;
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String fullname = request.getParameter("name");
@@ -44,22 +46,25 @@ public class AddStudent extends HttpServlet {
         char gender = request.getParameter("gender").charAt(0);
         String major = request.getParameter("major");
         int yob = Integer.parseInt(request.getParameter("yob"));
+        String skill = request.getParameter("skill");
+        String manifesto = request.getParameter("manifesto");
         
-        HttpSession session = request.getSession();
+        MyUser edited = myUserFacade.find(id);
+        
+        edited.setUsername(username);
+        edited.setPassword(password);
+        edited.setName(fullname);
+        edited.setEmail(email);
+        edited.setGender(gender);
+        edited.setMajor(major);
+        edited.setYearOfBirth(yob);
+        edited.setSkills(skill);
+        edited.setManifesto(manifesto);
+        
+        myUserFacade.edit(edited);
 
-        if (myUserFacade.findUsername(username) != null){
-            // username taken
-            session.setAttribute("message", String.format("Username \"%s\" already exist, please try again with another username", username));
-            request.getRequestDispatcher("add_student.jsp").include(request, response);
+        request.getRequestDispatcher("contestant.jsp").forward(request, response);
 
-        } else{
-            MyUser newUser = new MyUser(username, password, fullname, email, major, gender, yob, "student", null, null);
-
-            myUserFacade.create(newUser);  
-            
-            request.getRequestDispatcher("student.jsp").forward(request, response);
-
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

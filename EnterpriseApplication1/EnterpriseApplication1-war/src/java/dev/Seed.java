@@ -87,6 +87,12 @@ public class Seed extends HttpServlet {
             userFacade.create(s3);
             userFacade.create(s4);
 
+            
+            MyUser c1 = new MyUser("jay", "password", "Jay Hey", "Jay@gmail.com", "Social Science", 'F', 2001, "contestant", "I will ensure all APU classroom to be equipped with smart whiteboard. ", "Leadership, Communication");
+            MyUser c2 = new MyUser("paultan", "password", "Paul Tan", "paultan@gmail.com", "Medicine", 'M', 1999, "contestant", "I will work hard with my team to upgrade APU wifi. ", "Innovation, Leadership");
+            
+            userFacade.create(c1);
+            userFacade.create(c2);
         }
     }
 

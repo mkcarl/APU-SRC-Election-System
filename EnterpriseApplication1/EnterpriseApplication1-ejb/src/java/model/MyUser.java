@@ -22,6 +22,8 @@ import javax.persistence.NamedQuery;
     @NamedQuery(name = "MyUser.findUsername", query = "SELECT u FROM MyUser u WHERE u.username = :username"),
     @NamedQuery(name = "MyUser.findAllCommitteeUsernameSimilarTo", query = "SELECT u FROM MyUser u WHERE u.username LIKE :username AND u.role = 'committee'"),
     @NamedQuery(name = "MyUser.findAllStudentUsernameSimilarTo", query = "SELECT u FROM MyUser u WHERE u.username LIKE :username AND u.role = 'student'"),
+    @NamedQuery(name = "MyUser.findAllContestantUsernameSimilarTo", query = "SELECT u FROM MyUser u WHERE u.username LIKE :username AND u.role = 'contestant'"),
+
 })
 
 public class MyUser implements Serializable {
