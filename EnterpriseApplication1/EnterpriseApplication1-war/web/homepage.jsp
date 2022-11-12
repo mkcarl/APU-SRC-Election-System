@@ -22,6 +22,13 @@
                 height: 90vh;
                 width: 100%;
             }
+            
+            .content{
+                display: inherit;
+                flex-direction: column; 
+                gap: 10px;
+                
+            }
         </style>
     </head>
     <body>
@@ -33,10 +40,18 @@
             %>
             <h1>no user found</h1>
             <%
-                } else if (((MyUser) request.getSession().getAttribute("login")).getRole().equals("admin")) {
-                    // if user role is admin
+                } else if (((MyUser) request.getSession().getAttribute("login")).getRole().equals("committee")) {
+                    // if user role is committee
             %>
-            <h1>welcome admin</h1>
+            <div class="content">
+                <h1>Welcome back <%= ((MyUser) request.getSession().getAttribute("login")).getName() %></h1>
+                <button class="btn btn-primary">Manage committee</button>
+                <button class="btn btn-primary">Manage students</button>
+                <button class="btn btn-primary">Manage contestants</button>
+                <button class="btn btn-primary">Choose election date</button>
+                <button class="btn btn-primary">Generate report</button>
+
+            </div>
             <%
 
         } else if (((MyUser) request.getSession().getAttribute("login")).getRole().equals("contestant")) {

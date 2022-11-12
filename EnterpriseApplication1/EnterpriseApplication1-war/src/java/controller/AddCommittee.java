@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dev;
+package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,20 +13,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.MyUser;
 import model.MyUserFacade;
 
 /**
  *
- * @author carl
+ * @author munky
  */
-@WebServlet(name = "Seed", urlPatterns = {"/Seed"})
-public class Seed extends HttpServlet {
+@WebServlet(name = "AddCommittee", urlPatterns = {"/committee/AddCommittee"})
+public class AddCommittee extends HttpServlet {
 
     @EJB
-    private MyUserFacade userFacade;
-
-    
+    private MyUserFacade myUserFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,53 +39,33 @@ public class Seed extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String fullname = request.getParameter("name");
+        String email = request.getParameter("email");
+        char gender = request.getParameter("gender").charAt(0);
+        
+        HttpSession session = request.getSession();
 
+        if (myUserFacade.findUsername(username) != null){
+            // username taken
+            session.setAttribute("message", String.format("Username \"%s\" already exist, please try again with another username", username));
+            request.getRequestDispatcher("add_committee.jsp").include(request, response);
+
+        } else{
+            MyUser newUser = new MyUser(username, password, fullname, email, null, gender, null, "committee", null, null);
+
+            myUserFacade.create(newUser);  
+            
+            request.getRequestDispatcher("committee.jsp").include(request, response);
+
+        }
+        
+        
+        
         try (PrintWriter out = response.getWriter()) {
-            userFacade.findAll().forEach((user) -> {
-                userFacade.remove(user);
-            });
-            System.out.println("Removed all users");
-
-            MyUser admin1 = new MyUser();
-            admin1.setUsername("admin01");
-            admin1.setPassword("admin123");
-            admin1.setName("HEAD COMMITTEE");
-            admin1.setRole("committee");
-
-            userFacade.create(admin1);
-
-            MyUser com1 = new MyUser();
-            com1.setUsername("comm1");
-            com1.setPassword("qwerty");
-            com1.setName("Jenny Tan");
-            com1.setRole("committee");
-
-            MyUser com2 = new MyUser();
-            com2.setUsername("comm2");
-            com2.setPassword("qwerty123");
-            com2.setName("Ben Stone");
-            com2.setRole("committee");
-
-            MyUser com3 = new MyUser();
-            com3.setUsername("comm3");
-            com3.setPassword("123123");
-            com3.setName("Hugh Jass");
-            com3.setRole("committee");
-
-            userFacade.create(com1);
-            userFacade.create(com2);
-            userFacade.create(com3);
-
-            MyUser s1 = new MyUser("john99", "password", "John Lee", "johnlee@gmail.com", "Computer Science", 'M', 1999, "student", null, null);
-            MyUser s2 = new MyUser("sam123", "password", "Sam Donald", "samsam123@gmail.com", "Marketing", 'M', 2001, "student", null, null);
-            MyUser s3 = new MyUser("jennn", "password", "Jenny Jena", "jenny@gmail.com", "Computer Science", 'F', 2003, "student", null, null);
-            MyUser s4 = new MyUser("richtan", "password", "Richard Tan", "richtan@gmail.com", "Business", 'M', 1999, "student", null, null);
-
-            userFacade.create(s1);
-            userFacade.create(s2);
-            userFacade.create(s3);
-            userFacade.create(s4);
-
+            
         }
     }
 

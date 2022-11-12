@@ -42,20 +42,18 @@
         <jsp:include page="../banner.jsp"/>
         <div class="center">
             
-            <h1>Add committee page</h1>
-            <form>
+            <h1>Add committee</h1>
+            <form action="AddCommittee" method="POST">
                 <label for="username" class="form-label">Username:</label>
-                <input id="username" type="text" class="form-control">
+                <input id="username" name="username" type="text" class="form-control">
                 <label for="password" class="form-label">Password:</label>
-                <input id="password" type="password" class="form-control">
+                <input id="password" name="password" type="password" class="form-control">
                 <label for="name" class="form-label">Full name:</label>
-                <input id="name" type="text" class="form-control">
+                <input id="name" name="name" type="text" class="form-control">
                 <label for="email" class="form-label">Email address:</label>
-                <input id="email" type="email" class="form-control">
+                <input id="email" name="email" type="email" class="form-control">
                 <label for="gender" class="form-label">Gender:</label>
-                <input id="gender" type="text" class="form-control">
-                
-                <%request.getSession().setAttribute("message","message here");%>
+                <input id="gender" name="gender" type="text" class="form-control">
                 
                 <%
                 if(request.getSession().getAttribute("message") != null){
@@ -68,8 +66,8 @@
                 %>
                     
                 <div class="submit-div">
-                    <button type="submit" name="submit" value="student" class="btn btn-primary">Register</button>
-                    <button type="submit" name="submit" value="contestor" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                    <a type="button" class="btn btn-secondary">Cancel</a>
                 </div>
 
             </form>

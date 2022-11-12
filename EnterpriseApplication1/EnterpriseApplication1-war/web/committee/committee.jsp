@@ -22,7 +22,7 @@
                 height: 90vh;
                 width: 100%;
             }
-            
+
             #action-input{
                 width: 20rem;
             }
@@ -31,6 +31,10 @@
                 flex-direction: row;
                 gap:10px;
                 justify-content: flex-end;
+            }
+            .controls{
+                display: flex; 
+                justify-content: space-between;
             }
         </style>
     </head>
@@ -46,8 +50,8 @@
         <!--if parameter exist-->
         <c:if test="${param.search != null}">
             <sql:query var="committee_list" dataSource="${myDS}">
-            SELECT * FROM myuser WHERE role = 'committee' and id = '${param.search}'
-        </sql:query>
+                SELECT * FROM myuser WHERE role = 'committee' and id = '${param.search}'
+            </sql:query>
         </c:if>
         <c:if test="${param.search == null}">
             <sql:query var="committee_list" dataSource="${myDS}">
@@ -59,22 +63,39 @@
                 <h1>Committee</h1>
             </div>
             <div class="main-table">
-                <form >
-                    <div id="actions">
-                        <input id="action-input" type="text" class="form-control" placeholder="eg: comm1">
-                        <button type="submit" class="btn btn-primary" name="submit" value="search">Search</button>
-                        <button type="submit" class="btn btn-success" name="submit" value="add">Add</button>
-                        <button type="submit" class="btn btn-warning" name="submit" value="edit">Edit</button>
-                        <button type="submit" class="btn btn-danger" name="submit" value="delete">Delete</button>
-
-                    </div>
-                </form>
-                <div>
+                <div class="controls">
+                    <form >
+                        <div id="actions">
+                            <input id="action-input" type="text" class="form-control" placeholder="eg: comm1">
+                            <a type="button" class="btn btn-success" href="add_committee.jsp">Add</a>
+                            <button type="submit" class="btn btn-warning" name="submit" value="edit">Edit</button>
+                            <button type="submit" class="btn btn-danger" name="submit" value="delete">Delete</button>
+                        </div>
+                    </form>
                     
+                    
+                    <form >
+                        <div id="actions">
+                            <input id="action-input" type="text" class="form-control" placeholder="eg: comm1">
+    <!--                        <select>
+                                <option value="id">ID</option>
+                                <option value="username">Username</option>
+                                <option value="fullname">Full name</option>
+                                <option value="gender">Gender</option>
+
+                            </select>-->
+                            <button type="submit" class="btn btn-primary" name="submit" value="search">Search</button>
+                        </div>
+                    </form>
+                    
+                    
+                </div>
+                <div>
                     <table class="table">
                         <thead>
                             <tr>
                                 <td>ID</td>
+                                <td>Username</td>
                                 <td>Password</td>
                                 <td>Full name</td>
                                 <td>Email</td>
@@ -86,6 +107,7 @@
                             <c:forEach var="committee" items="${committee_list.rows}">
                                 <tr>
                                     <td><c:out value="${committee.id}"></c:out></td>
+                                    <td><c:out value="${committee.username}"></c:out></td>
                                     <td><c:out value="${committee.password}"></c:out></td>
                                     <td><c:out value="${committee.name}"></c:out></td>
                                     <td><c:out value="${committee.email}"></c:out></td>
