@@ -44,7 +44,7 @@ public class SearchCommittee extends HttpServlet {
 
         
         String username = request.getParameter("username");
-        List<MyUser> all = myUserFacade.findAllUsernameSimilarTo(username);
+        List<MyUser> all = myUserFacade.findAllCommitteeUsernameSimilarTo(username);
         session.setAttribute("search", all);
         request.getRequestDispatcher("committee.jsp").include(request, response);
         
