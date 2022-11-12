@@ -4,6 +4,7 @@
     Author     : carl
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -20,9 +21,12 @@
                     APU SRC Election 2022
                 </a>
                 <div class="navbar-nav">
-<!--                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    <a class="nav-link" href="#">Features</a>
-                    <a class="nav-link" href="#">Pricing</a>-->
+                    <form>
+                        <c:if test="<%= session.getAttribute("login") != null %>">
+                            <button type="submit" class="btn btn-outline-primary" formaction="Logout" formmethod="POST">Logout</button>
+                        </c:if>
+                        
+                    </form>
                 </div>
             </div>
         </nav>
