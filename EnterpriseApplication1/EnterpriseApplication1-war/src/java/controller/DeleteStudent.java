@@ -7,7 +7,6 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,8 +21,8 @@ import model.MyUserFacade;
  *
  * @author munky
  */
-@WebServlet(name = "SearchCommittee", urlPatterns = {"/committee/SearchCommittee"})
-public class SearchCommittee extends HttpServlet {
+@WebServlet(name = "DeleteStudent", urlPatterns = {"/committee/DeleteStudent"})
+public class DeleteStudent extends HttpServlet {
 
     @EJB
     private MyUserFacade myUserFacade;
@@ -42,10 +41,17 @@ public class SearchCommittee extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
 
-        String username = request.getParameter("username");
-        List<MyUser> all = myUserFacade.findAllCommitteeUsernameSimilarTo(username);
-        session.setAttribute("search", all);
-        request.getRequestDispatcher("committee.jsp").include(request, response);
+        long id = Long.parseLong(request.getParameter("id"));
+        MyUser found = myUserFacade.find(id);
+
+        if (found == null) {
+            session.setAttribute("message", String.format("User with ID \"%d\" not found ", id));
+
+        } else {
+            myUserFacade.remove(found);
+
+        }
+        request.getRequestDispatcher("student.jsp").include(request, response);
 
     }
 

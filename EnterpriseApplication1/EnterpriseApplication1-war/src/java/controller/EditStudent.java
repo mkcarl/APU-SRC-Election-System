@@ -7,7 +7,6 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,8 +21,8 @@ import model.MyUserFacade;
  *
  * @author munky
  */
-@WebServlet(name = "SearchCommittee", urlPatterns = {"/committee/SearchCommittee"})
-public class SearchCommittee extends HttpServlet {
+@WebServlet(name = "EditStudent", urlPatterns = {"/committee/EditStudent"})
+public class EditStudent extends HttpServlet {
 
     @EJB
     private MyUserFacade myUserFacade;
@@ -41,12 +40,20 @@ public class SearchCommittee extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
+        long id = Long.parseLong(request.getParameter("id"));
+        System.out.println(String.format("id is %d", id));
+        MyUser found = myUserFacade.find(id);
+        // TODO : implement find by role 
 
-        String username = request.getParameter("username");
-        List<MyUser> all = myUserFacade.findAllCommitteeUsernameSimilarTo(username);
-        session.setAttribute("search", all);
-        request.getRequestDispatcher("committee.jsp").include(request, response);
+        if (found != null) {
+            session.setAttribute("edit", found);
+            request.getRequestDispatcher("edit_student.jsp").include(request, response);
 
+        } else {
+            session.setAttribute("message", String.format("User with ID \"%d\" not found ", id));
+            request.getRequestDispatcher("student.jsp").include(request, response);
+
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

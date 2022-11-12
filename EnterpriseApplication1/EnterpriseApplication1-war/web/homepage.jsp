@@ -45,8 +45,8 @@
             %>
             <div class="content">
                 <h1>Welcome back <%= ((MyUser) request.getSession().getAttribute("login")).getName() %></h1>
-                <button class="btn btn-primary">Manage committee</button>
-                <button class="btn btn-primary">Manage students</button>
+                <a class="btn btn-primary" href="committee/committee.jsp">Manage committee</a>
+                <a class="btn btn-primary" href="committee/student.jsp">Manage students</a>
                 <button class="btn btn-primary">Manage contestants</button>
                 <button class="btn btn-primary">Choose election date</button>
                 <button class="btn btn-primary">Generate report</button>

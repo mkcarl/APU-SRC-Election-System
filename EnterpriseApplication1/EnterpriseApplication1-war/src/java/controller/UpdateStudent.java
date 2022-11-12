@@ -7,14 +7,12 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import model.MyUser;
 import model.MyUserFacade;
 
@@ -22,8 +20,8 @@ import model.MyUserFacade;
  *
  * @author munky
  */
-@WebServlet(name = "SearchCommittee", urlPatterns = {"/committee/SearchCommittee"})
-public class SearchCommittee extends HttpServlet {
+@WebServlet(name = "UpdateStudent", urlPatterns = {"/committee/UpdateStudent"})
+public class UpdateStudent extends HttpServlet {
 
     @EJB
     private MyUserFacade myUserFacade;
@@ -40,12 +38,28 @@ public class SearchCommittee extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-
+        long id = Long.parseLong(request.getParameter("id")) ;
         String username = request.getParameter("username");
-        List<MyUser> all = myUserFacade.findAllCommitteeUsernameSimilarTo(username);
-        session.setAttribute("search", all);
-        request.getRequestDispatcher("committee.jsp").include(request, response);
+        String password = request.getParameter("password");
+        String fullname = request.getParameter("name");
+        String email = request.getParameter("email");
+        char gender = request.getParameter("gender").charAt(0);
+        String major = request.getParameter("major");
+        int yob = Integer.parseInt(request.getParameter("yob"));
+        
+        MyUser edited = myUserFacade.find(id);
+        
+        edited.setUsername(username);
+        edited.setPassword(password);
+        edited.setName(fullname);
+        edited.setEmail(email);
+        edited.setGender(gender);
+        edited.setMajor(major);
+        edited.setYearOfBirth(yob);
+        
+        myUserFacade.edit(edited);
+
+        request.getRequestDispatcher("student.jsp").forward(request, response);
 
     }
 

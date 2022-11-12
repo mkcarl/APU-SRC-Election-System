@@ -29,31 +29,37 @@ public class MyUserFacade extends AbstractFacade<MyUser> {
     public MyUserFacade() {
         super(MyUser.class);
     }
-    
-    
-   public List<MyUser> findAllCommitteeUsernameSimilarTo(String username){
+
+    public List<MyUser> findAllCommitteeUsernameSimilarTo(String username) {
         Query query = em.createNamedQuery("MyUser.findAllCommitteeUsernameSimilarTo");
         query.setParameter("username", "%" + username + "%");
-        List<MyUser> all = query.getResultList(); 
+        List<MyUser> all = query.getResultList();
 
-        return all; 
-        
+        return all;
+
     }
-    
-    public MyUser findUsername(String username){
-        MyUser found = null; 
-        
+
+    public List<MyUser> findAllStudentUsernameSimilarTo(String username) {
+        Query query = em.createNamedQuery("MyUser.findAllStudentUsernameSimilarTo");
+        query.setParameter("username", "%" + username + "%");
+        List<MyUser> all = query.getResultList();
+
+        return all;
+
+    }
+
+    public MyUser findUsername(String username) {
+        MyUser found = null;
+
         Query query = em.createNamedQuery("MyUser.findUsername");
         query.setParameter("username", username);
-        List<MyUser> all = query.getResultList(); 
-        if (all.size() > 0 ){
+        List<MyUser> all = query.getResultList();
+        if (all.size() > 0) {
             found = all.get(0);
         }
-        
-        return found; 
-        
+
+        return found;
+
     }
-    
-    
-    
+
 }

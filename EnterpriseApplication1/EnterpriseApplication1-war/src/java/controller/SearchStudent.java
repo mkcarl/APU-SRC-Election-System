@@ -22,8 +22,8 @@ import model.MyUserFacade;
  *
  * @author munky
  */
-@WebServlet(name = "SearchCommittee", urlPatterns = {"/committee/SearchCommittee"})
-public class SearchCommittee extends HttpServlet {
+@WebServlet(name = "SearchStudent", urlPatterns = {"/committee/SearchStudent"})
+public class SearchStudent extends HttpServlet {
 
     @EJB
     private MyUserFacade myUserFacade;
@@ -43,10 +43,9 @@ public class SearchCommittee extends HttpServlet {
         HttpSession session = request.getSession();
 
         String username = request.getParameter("username");
-        List<MyUser> all = myUserFacade.findAllCommitteeUsernameSimilarTo(username);
+        List<MyUser> all = myUserFacade.findAllStudentUsernameSimilarTo(username);
         session.setAttribute("search", all);
-        request.getRequestDispatcher("committee.jsp").include(request, response);
-
+        request.getRequestDispatcher("student.jsp").include(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

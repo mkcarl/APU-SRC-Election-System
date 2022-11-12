@@ -25,6 +25,11 @@
         </style>
     </head>
     <body>
+        <%
+        if (request.getSession().getAttribute("login") != null){
+            response.sendRedirect("homepage.jsp");
+        }
+        %>
         <jsp:include page="banner.jsp"/>
         <div class="center">
             <h1>APU SRC is holding their annual election. Come cast your vote!</h1>

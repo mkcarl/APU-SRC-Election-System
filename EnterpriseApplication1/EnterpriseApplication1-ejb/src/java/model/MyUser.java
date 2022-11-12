@@ -19,10 +19,11 @@ import javax.persistence.NamedQuery;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "MyUser.findUsername", query = "SELECT u FROM MyUser u WHERE u.username = :username")
-    ,
+    @NamedQuery(name = "MyUser.findUsername", query = "SELECT u FROM MyUser u WHERE u.username = :username"),
+    @NamedQuery(name = "MyUser.findAllCommitteeUsernameSimilarTo", query = "SELECT u FROM MyUser u WHERE u.username LIKE :username AND u.role = 'committee'"),
+    @NamedQuery(name = "MyUser.findAllStudentUsernameSimilarTo", query = "SELECT u FROM MyUser u WHERE u.username LIKE :username AND u.role = 'student'"),
+})
 
-    @NamedQuery(name = "MyUser.findAllCommitteeUsernameSimilarTo", query = "SELECT u FROM MyUser u WHERE u.username LIKE :username AND u.role = 'committee'"),})
 public class MyUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
