@@ -57,6 +57,15 @@
         } else if (((MyUser) request.getSession().getAttribute("login")).getRole().equals("contestant")) {
                     // if user role is constestant
             %>
+            <div class="content">
+                <h1>Welcome back contestant <%= ((MyUser) request.getSession().getAttribute("login")).getName() %></h1>
+                <h2>Election is starting at __________</h2>
+                
+                <a class="btn btn-primary" href="contestant/register_seat.jsp">Register seat</a>
+                <a class="btn btn-primary" href="contestant/contestants.jsp">View all contestant</a>
+                
+
+            </div>
             <%
 
         } else if (((MyUser) request.getSession().getAttribute("login")).getRole().equals("student")) {

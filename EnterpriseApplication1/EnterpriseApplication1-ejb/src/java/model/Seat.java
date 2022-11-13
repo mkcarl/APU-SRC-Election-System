@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
 /**
@@ -18,6 +20,11 @@ import javax.persistence.OneToOne;
  * @author carl
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Seat.userRegsitered", query = "SELECT s FROM Seat s WHERE s.contested_by = :myuser"),
+    @NamedQuery(name = "Seat.seatsWithPosition", query = "SELECT s FROM Seat s WHERE s.seat_for = :position"),
+
+})
 public class Seat implements Serializable {
 
     private static final long serialVersionUID = 1L;

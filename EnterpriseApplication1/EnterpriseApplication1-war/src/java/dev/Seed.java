@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.MyUser;
 import model.MyUserFacade;
+import model.Position;
+import model.PositionFacade;
 
 /**
  *
@@ -24,9 +26,10 @@ import model.MyUserFacade;
 public class Seed extends HttpServlet {
 
     @EJB
-    private MyUserFacade userFacade;
+    private PositionFacade positionFacade;
 
-    
+    @EJB
+    private MyUserFacade userFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -87,12 +90,47 @@ public class Seed extends HttpServlet {
             userFacade.create(s3);
             userFacade.create(s4);
 
-            
             MyUser c1 = new MyUser("jay", "password", "Jay Hey", "Jay@gmail.com", "Social Science", 'F', 2001, "contestant", "I will ensure all APU classroom to be equipped with smart whiteboard. ", "Leadership, Communication");
             MyUser c2 = new MyUser("paultan", "password", "Paul Tan", "paultan@gmail.com", "Medicine", 'M', 1999, "contestant", "I will work hard with my team to upgrade APU wifi. ", "Innovation, Leadership");
-            
+
             userFacade.create(c1);
             userFacade.create(c2);
+
+            positionFacade.findAll().forEach((pos) -> {
+                positionFacade.remove(pos);
+            });
+
+            Position pos1 = new Position();
+            pos1.setName("President");
+            pos1.setDescription("Overlook the whole APUSRC. Monthly meeting with APU board.");
+            pos1.setNumberOfAvailableSeats(3);
+
+            Position pos2 = new Position();
+            pos2.setName("Tresurer");
+            pos2.setDescription("Manage finances for APUSRC. Prepare finanical report for every quarter.");
+            pos2.setNumberOfAvailableSeats(3);
+
+            Position pos3 = new Position();
+            pos3.setName("Secretary");
+            pos3.setDescription("Manage all meeting logs. Prepare report for each event. ");
+            pos3.setNumberOfAvailableSeats(5);
+
+            Position pos4 = new Position();
+            pos4.setName("Logistics");
+            pos4.setDescription("Manage all logistics aspects of all events.");
+            pos4.setNumberOfAvailableSeats(4);
+
+            Position pos5 = new Position();
+            pos5.setName("Marketing");
+            pos5.setDescription("Manage social media of APUSRC. In charge of all promotional event. ");
+            pos5.setNumberOfAvailableSeats(3);
+
+            positionFacade.create(pos1);
+            positionFacade.create(pos2);
+            positionFacade.create(pos3);
+            positionFacade.create(pos4);
+            positionFacade.create(pos5);
+
         }
     }
 
