@@ -54,7 +54,7 @@
                 <c:forEach var="i" step="1" begin="0" end="${fn:length(all_contestants.rows) - 1}">
 
                     <p>${i+1}. ${all_contestants.rows[i].user_fullname} (contesting for ${all_contestants.rows[i].position_name})
-                    <button class="btn btn-primary" type="submit" formaction="ContestantDetails" formmethod="POST" name="id" value="${all_contestants.rows[i].uid}">View details</button>
+                    <button class="btn btn-primary" type="submit" formaction="../MyUserDetails" formmethod="POST" name="id" value="${all_contestants.rows[i].uid}">View details</button>
                     </p>
                 </c:forEach>
             </form>
