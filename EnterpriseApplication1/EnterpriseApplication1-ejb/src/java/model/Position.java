@@ -19,6 +19,9 @@ import javax.persistence.NamedQuery;
  */
 @Entity
 @NamedQueries({
+        @NamedQuery(name = "Position.findPosition", query = "SELECT s FROM Position s WHERE s.name = :pos"),
+        @NamedQuery(name = "Position.findAllPositionLike", query = "SELECT s FROM Position s WHERE LOWER(s.name) LIKE LOWER(:pos)"),
+
 })
 public class Position implements Serializable {
 
