@@ -4,6 +4,7 @@
     Author     : carl
 --%>
 
+<%@page import="model.MyUser"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -23,6 +24,11 @@
                 <div class="navbar-nav">
                     <form>
                         <c:if test="<%= session.getAttribute("login") != null %>">
+                            <%-- edit profile button --%>
+                            <c:if test="<%= ((MyUser)session.getAttribute("login")).getRole().equals("student") || ((MyUser)session.getAttribute("login")).getRole().equals("contestant") %>">
+                                <a class="btn btn-outline-primary" href="edit_profile.jsp">Edit profile</a>
+                            </c:if>
+                            <%-- logout button --%>                                
                             <button type="submit" class="btn btn-outline-primary" formaction="/EnterpriseApplication1-war/Logout" formmethod="POST">Logout</button>
                         </c:if>
                         

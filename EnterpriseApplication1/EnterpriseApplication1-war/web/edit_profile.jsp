@@ -4,8 +4,8 @@
     Author     : carl
 --%>
 
+<%@page import="model.MyUser"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="model.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -20,7 +20,7 @@
                 padding: 0 45rem;
                 justify-content: center;
                 align-content: center;
-                height: 90vh;
+                min-height: 90vh;
             }
 
             .submit-div{
@@ -44,37 +44,34 @@
     </head>
     <body>
         <jsp:include page="banner.jsp"/>
-
+        <% MyUser login = (MyUser) request.getSession().getAttribute("login"); %>
         <div class="center">
 
             <h1>Edit profile</h1>
-            <form>
+            <form action="EditProfile" method="POST">
                 <label for="username" class="form-label">Username:</label>
-                <input id="username" type="text" class="form-control">
+                <input id="username" name="username" type="text" class="form-control"  value="${login.username}">
                 <label for="password" class="form-label">Password:</label>
-                <input id="password" type="password" class="form-control">
+                <input id="password" name="password" type="text" class="form-control" value="${login.password}" >
                 <label for="name" class="form-label">Full name:</label>
-                <input id="name" type="text" class="form-control">
+                <input id="name" name="name" type="text" class="form-control" value="${login.name}">
                 <label for="email" class="form-label">Email address:</label>
-                <input id="email" type="email" class="form-control">
-                <label for="major" class="form-label">Majoring in:</label>
-                <input id="major" type="text" class="form-control">
-                <label for="yob" class="form-label">Year of birth:</label>
-                <input id="yob" type="number" class="form-control">
+                <input id="email" name="email" type="email" class="form-control" value="${login.email}">
+                <label for="gender" class="form-label">Gender:</label>
+                <input id="gender" name="gender" type="text" class="form-control" value="${login.gender}">
+                <label for="major" class="form-label">Major:</label>
+                <input id="major" name="major" type="text" class="form-control" value="${login.major}">
+                <label for="yob" class="form-label">Year of Birth:</label>
+                <input id="yob" name="yob" type="text" class="form-control" value="${login.yearOfBirth}">  
 
-                <%
-                    if (request.getSession().getAttribute("login") != null &&  ((User) request.getSession().getAttribute("login")).getRole() == "contestant") {
-                %>
-                <label for="manifesto" class="form-label">Manifesto:</label>
-                <input id="manifesto" type="number" class="form-control">
-                <label for="skills" class="form-label">List down your skills:</label>
-                <input id="skills" type="number" class="form-control">
-                <%
-                    }
-                %>
+                <c:if test="${login.role == 'contestant'}">
+                    <label for="skill" class="form-label">Skills:</label>
+                    <input id="skill" name="skill" type="text" class="form-control" value="${login.skills}" >
+                    <label for="manifesto" class="form-label">Manifesto:</label>
+                    <textarea id="manifesto" name="manifesto" type="text" class="form-control" rows="3">${login.manifesto}</textarea>
+                    
+                </c:if>
                                
-
-                <%request.getSession().setAttribute("message", "message here");%>
 
                 <%
                     if (request.getSession().getAttribute("message") != null) {
@@ -87,8 +84,8 @@
                 %>
 
                 <div>
-                    <button type="submit" name="submit" value="cancel" class="btn btn-secondary">Cancel</button>
-                    <button type="submit" name="submit" value="save" class="btn btn-primary">Save</button>
+                    <a class="btn btn-secondary" href="homepage.jsp">Cancel</a>
+                    <button type="submit" class="btn btn-primary" name="id" value="${login.id}">Save</button>
                 </div>
 
             </form>
