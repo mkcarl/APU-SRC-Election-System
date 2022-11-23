@@ -48,8 +48,9 @@
                 <a class="btn btn-primary" href="committee/committee.jsp">Manage committee</a>
                 <a class="btn btn-primary" href="committee/student.jsp">Manage students</a>
                 <a class="btn btn-primary" href="committee/contestant.jsp">Manage contestants</a>
-                <a class="btn btn-primary" href="committee/position.jsp">Manage positions</a>                
-                <button class="btn btn-primary">Choose election date</button>
+                <a class="btn btn-primary" href="committee/position.jsp">Manage positions</a>                   
+                <a class="btn btn-primary" href="election_date.jsp">Choose election date</a>                
+             
                 <button class="btn btn-primary">Generate report</button>
 
             </div>

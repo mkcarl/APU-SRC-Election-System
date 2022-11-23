@@ -3,16 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/web/registration.jsp</file>
-            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/src/java/controller/Registration.java</file>
-            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/web/login.jsp</file>
-            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/web/index.jsp</file>
-            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/src/java/controller/DeleteStudent.java</file>
-            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/web/committee/student.jsp</file>
-            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/src/java/controller/UpdateStudent.java</file>
-            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/src/java/controller/SearchStudent.java</file>
-            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/src/java/controller/EditStudent.java</file>
-            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/src/java/controller/AddStudent.java</file>
+            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/web/homepage.jsp</file>
+            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/web/election_date.jsp</file>
+            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/src/java/controller/Config.java</file>
         </group>
     </open-files>
 </project-private>
