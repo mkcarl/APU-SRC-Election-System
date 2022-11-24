@@ -1,4 +1,9 @@
-package controller;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package model;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -8,8 +13,8 @@ import java.time.ZoneOffset;
  * @author munky
  */
 public class Config {
-    private static long startTimestamp = LocalDateTime.now().plusDays(1).toLocalDate().atStartOfDay().toEpochSecond(ZoneOffset.UTC); 
-    private static int duration = 24; // in hours 
+    public static long startTimestamp = LocalDateTime.now().plusDays(1).toLocalDate().atStartOfDay().toEpochSecond(ZoneOffset.UTC); 
+    public static int duration = 24; // in hours 
 
     public static long getStartTimestamp() {
         return startTimestamp;

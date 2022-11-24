@@ -24,7 +24,7 @@
             
         </style>
     </head>
-    <body>
+    <body>        
         <%
         if (request.getSession().getAttribute("login") != null){
             response.sendRedirect("homepage.jsp");

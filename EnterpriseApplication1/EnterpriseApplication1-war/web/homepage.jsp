@@ -4,6 +4,8 @@
     Author     : munky
 --%>
 
+<%@page import="java.util.Date"%>
+<%@page import="model.Config"%>
 <%@page import="model.MyUser"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -61,7 +63,7 @@
             %>
             <div class="content">
                 <h1>Welcome back contestant <%= ((MyUser) request.getSession().getAttribute("login")).getName() %></h1>
-                <h2>Election is starting at __________</h2>
+                <h2>Election is starting at <%= new Date(Config.getStartTimestamp() * 1000L) %></h2>
                 
                 <a class="btn btn-primary" href="contestant/register_seat.jsp">Register seat</a>
                 <a class="btn btn-primary" href="contestant/contestants.jsp">View all contestant</a>

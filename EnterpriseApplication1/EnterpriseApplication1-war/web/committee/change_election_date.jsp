@@ -4,8 +4,8 @@
     Author     : munky
 --%>
 
+<%@page import="model.Config"%>
 <%@page import="java.util.Date"%>
-<%@page import="controller.Config"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

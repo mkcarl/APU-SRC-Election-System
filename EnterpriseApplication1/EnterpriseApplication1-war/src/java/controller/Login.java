@@ -26,6 +26,8 @@ public class Login extends HttpServlet {
 
     @EJB
     private MyUserFacade myUserFacade;
+    
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,7 +41,7 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
