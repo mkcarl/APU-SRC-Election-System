@@ -4,6 +4,7 @@
     Author     : munky
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.util.Date"%>
 <%@page import="model.Config"%>
 <%@page import="model.MyUser"%>
@@ -23,62 +24,58 @@
                 padding: 0 10rem;
                 height: 90vh;
                 width: 100%;
+                align-items: center;
             }
-            
+
             .content{
                 display: inherit;
                 flex-direction: column; 
                 gap: 10px;
-                
+
             }
         </style>
     </head>
     <body>
         <jsp:include page="banner.jsp"/>
         <div class="main">
-            <%
-                 if (request.getSession().getAttribute("login") == null){
-                    // if no user found
-            %>
-            <h1>no user found</h1>
-            <%
-                } else if (((MyUser) request.getSession().getAttribute("login")).getRole().equals("committee")) {
-                    // if user role is committee
-            %>
-            <div class="content">
-                <h1>Welcome back <%= ((MyUser) request.getSession().getAttribute("login")).getName() %></h1>
-                <a class="btn btn-primary" href="committee/committee.jsp">Manage committee</a>
-                <a class="btn btn-primary" href="committee/student.jsp">Manage students</a>
-                <a class="btn btn-primary" href="committee/contestant.jsp">Manage contestants</a>
-                <a class="btn btn-primary" href="committee/position.jsp">Manage positions</a>                   
-                <a class="btn btn-primary" href="election_date.jsp">Choose election date</a>                
-             
-                <button class="btn btn-primary">Generate report</button>
 
-            </div>
-            <%
+            <c:if test="!${sessionScope.login.role}">
+                <h1>no user found</h1>
+            </c:if>
+            
+            <c:if test="${sessionScope.login.role == 'committee'}">
+                <div class="content">
+                    <h1>Welcome back <%= ((MyUser) request.getSession().getAttribute("login")).getName()%></h1>
+                    <a class="btn btn-primary" href="committee/committee.jsp">Manage committee</a>
+                    <a class="btn btn-primary" href="committee/student.jsp">Manage students</a>
+                    <a class="btn btn-primary" href="committee/contestant.jsp">Manage contestants</a>
+                    <a class="btn btn-primary" href="committee/position.jsp">Manage positions</a>                   
+                    <a class="btn btn-primary" href="election_date.jsp">Choose election date</a>                
 
-        } else if (((MyUser) request.getSession().getAttribute("login")).getRole().equals("contestant")) {
-                    // if user role is constestant
-            %>
-            <div class="content">
-                <h1>Welcome back contestant <%= ((MyUser) request.getSession().getAttribute("login")).getName() %></h1>
-                <h2>Election is starting at <%= new Date(Config.getStartTimestamp() * 1000L) %></h2>
-                
-                <a class="btn btn-primary" href="contestant/register_seat.jsp">Register seat</a>
-                <a class="btn btn-primary" href="contestant/contestants.jsp">View all contestant</a>
-                
+                    <button class="btn btn-primary">Generate report</button>
 
-            </div>
-            <%
+                </div>
+            </c:if>
 
-        } else if (((MyUser) request.getSession().getAttribute("login")).getRole().equals("student")) {
-                    // if user role is student
-            %>
-            <%
+            <c:if test="${sessionScope.login.role == 'contestant'}">
+                <div class="content">
+                    <h1>Welcome back contestant <%= ((MyUser) request.getSession().getAttribute("login")).getName()%></h1>
+                    <h2>Election is starting at <%= new Date(Config.getStartTimestamp() * 1000L)%></h2>
 
-        }
-            %>
+                    <a class="btn btn-primary" href="contestant/register_seat.jsp">Register seat</a>
+                    <a class="btn btn-primary" href="contestant/contestants.jsp">View all contestant</a>
+
+
+                </div>
+            </c:if>   
+
+            <c:if test="${sessionScope.login.role == 'student'}">
+                <h1>Welcome back student <%= ((MyUser) request.getSession().getAttribute("login")).getName()%></h1>
+                <h2>Election is starting at <%= new Date(Config.getStartTimestamp() * 1000L)%></h2>
+
+                <a class="btn btn-primary" href="student/vote_homepage.jsp">Vote now</a>
+            </c:if>
+
 
 
         </div>

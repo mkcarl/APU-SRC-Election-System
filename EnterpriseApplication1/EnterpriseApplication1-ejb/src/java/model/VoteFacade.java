@@ -8,6 +8,7 @@ package model;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,6 +27,16 @@ public class VoteFacade extends AbstractFacade<Vote> {
 
     public VoteFacade() {
         super(Vote.class);
+    }
+    
+    public boolean userHasVotedPosition(MyUser voter, Position pos){
+        Query query = em.createNamedQuery("Vote.userHasVotedPosition");
+        query.setParameter("voter", voter);
+        query.setParameter("pos", pos);
+        
+        return (query.getResultList().size() > 0);  
+        
+        
     }
     
 }

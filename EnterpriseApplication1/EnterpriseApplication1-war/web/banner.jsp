@@ -26,7 +26,7 @@
                         <c:if test="<%= session.getAttribute("login") != null %>">
                             <%-- edit profile button --%>
                             <c:if test="<%= ((MyUser)session.getAttribute("login")).getRole().equals("student") || ((MyUser)session.getAttribute("login")).getRole().equals("contestant") %>">
-                                <a class="btn btn-outline-primary" href="edit_profile.jsp">Edit profile</a>
+                                <a class="btn btn-outline-primary" href="/EnterpriseApplication1-war/edit_profile.jsp">Edit profile</a>
                             </c:if>
                             <%-- logout button --%>                                
                             <button type="submit" class="btn btn-outline-primary" formaction="/EnterpriseApplication1-war/Logout" formmethod="POST">Logout</button>

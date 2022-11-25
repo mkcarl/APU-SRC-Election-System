@@ -11,12 +11,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author carl
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Vote.userHasVotedPosition", query = "SELECT v FROM Vote v JOIN Seat s WHERE v.voted_for = s AND s.seat_for = :pos AND v.voted_by = :voter")
+})
 public class Vote implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -27,6 +32,17 @@ public class Vote implements Serializable {
     private MyUser voted_by;
     @ManyToOne
     private Seat voted_for;
+
+    public Vote(MyUser voted_by, Seat voted_for, Long time_voted) {
+        this.voted_by = voted_by;
+        this.voted_for = voted_for;
+        this.time_voted = time_voted;
+    }
+
+    public Vote() {
+    }
+    
+    
     private Long time_voted;
 
     public MyUser getVoted_by() {
