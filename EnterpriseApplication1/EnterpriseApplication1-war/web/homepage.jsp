@@ -82,7 +82,7 @@
                 </c:if>
                 <c:if test="<%= Config.electionEnded()%>">  
                     <h2>Election has ended. Thank you.</h2>
-                    <a class="btn btn-primary" href="" >Results</a>
+                    <a class="btn btn-primary" href="view_results.jsp" >Results</a>
                 </c:if>
 
             </c:if>

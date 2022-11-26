@@ -46,7 +46,7 @@
                 </c:if>
                 <c:if test="<%= Config.electionEnded()%>">
                     <h1>Election has ended</h1>        
-                    <a class="btn btn-primary" href="" >Results</a>
+                    <a class="btn btn-primary" href="/EnterpriseApplication1-war/view_results.jsp" >Results</a>
                 </c:if>
                 <form>
                     <c:if test="<%= !Config.electionStarted()%>">

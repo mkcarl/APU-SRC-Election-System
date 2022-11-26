@@ -24,8 +24,12 @@
                 <div class="navbar-nav">
                     <form>
                         <c:if test="<%= session.getAttribute("login") != null %>">
+                            <c:if test="${sessionScope.login.role == 'committee'}">
+                                    <button class="btn btn-outline-primary" type="submit" formaction="/EnterpriseApplication1-war/committee/ElectionProgress" formmethod="POST">Progress</button>
+                            </c:if>
+
                             <%-- edit profile button --%>
-                            <c:if test="<%= ((MyUser)session.getAttribute("login")).getRole().equals("student") || ((MyUser)session.getAttribute("login")).getRole().equals("contestant") %>">
+                            <c:if test="${sessionScope.login.role == 'contestant' || sessionScope.login.role == 'student'}">
                                 <a class="btn btn-outline-primary" href="/EnterpriseApplication1-war/edit_profile.jsp">Edit profile</a>
                             </c:if>
                             <%-- logout button --%>                                

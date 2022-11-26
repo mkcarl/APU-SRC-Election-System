@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -34,9 +36,18 @@ public class VoteFacade extends AbstractFacade<Vote> {
         query.setParameter("voter", voter);
         query.setParameter("pos", pos);
         
-        return (query.getResultList().size() > 0);  
-        
-        
+        return (query.getResultList().size() > 0);
+    }
+    
+    public int numberOfUniqueVoters(){
+        List<Vote> all = this.findAll();
+        List<Long> uniqueVotersId = new ArrayList<Long>();
+        for(Vote v : all){
+            if (!uniqueVotersId.contains(v.getVoted_by().getId())){
+                uniqueVotersId.add(v.getVoted_by().getId());
+            }
+        }
+        return uniqueVotersId.size();
     }
     
 }

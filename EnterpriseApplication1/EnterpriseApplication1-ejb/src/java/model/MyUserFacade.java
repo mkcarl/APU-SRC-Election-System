@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -69,6 +70,18 @@ public class MyUserFacade extends AbstractFacade<MyUser> {
 
         return found;
 
+    }
+    
+    public List<MyUser> findByRole(String roleName){
+        List<MyUser> all = this.findAll();
+        List<MyUser> found = new ArrayList<MyUser>();
+        for (MyUser u : all) {
+            if (u.getRole().equals(roleName)){
+                found.add(u);
+            }
+        }
+        return found;
+        
     }
 
 }
