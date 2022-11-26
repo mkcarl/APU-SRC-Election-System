@@ -19,7 +19,7 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                align-content: center;
+                align-items: center;
                 min-height: 90vh;
                 width: 100%;
             }
@@ -35,12 +35,31 @@
         <jsp:include page="banner.jsp"/>
 
         <div class="main center">
-            <h1>Election is starting at : </h1>
-            <h2><u><%= new Date(Config.getStartTimestamp() * 1000L)%></u></h2>
             
             <c:if test="${sessionScope.login.role == 'committee'}">
+                <c:if test="<%= !Config.electionEnded()%>">
+                <h1>Election start date is set at: </h1>
+                <h2><u><%= new Date(Config.getStartTimestamp() * 1000L)%></u></h2>   
+                    <c:if test="<%= Config.electionStarted()%>">
+                        <a class="btn btn-primary disabled" href="/EnterpriseApplication1-war/committee/change_election_date.jsp">Change</a>
+                    </c:if>
+                </c:if>
+                <c:if test="<%= Config.electionEnded()%>">
+                    <h1>Election has ended</h1>        
+                    <a class="btn btn-primary" href="" >Results</a>
+                </c:if>
                 <form>
-                    <a class="btn btn-primary" href="/EnterpriseApplication1-war/committee/change_election_date.jsp">Change</a>
+                    <c:if test="<%= !Config.electionStarted()%>">
+                        <a class="btn btn-primary" href="/EnterpriseApplication1-war/committee/change_election_date.jsp">Change</a>
+                    </c:if>
+                    
+                        
+                    <br><br><br>
+                    
+                    <c:if test="<%= Config.electionStarted() && !Config.electionEnded() %>">  
+                        <button type="submit" class="btn btn-danger" formaction="/EnterpriseApplication1-war/committee/EndElection" formmethod="POST" onclick="return confirm('Are you sure you want to end the election?');">End election</button>
+                    </c:if>
+                    
                 </form>
             
             </c:if>

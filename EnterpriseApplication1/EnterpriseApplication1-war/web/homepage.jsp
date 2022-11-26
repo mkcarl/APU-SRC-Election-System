@@ -71,9 +71,20 @@
 
             <c:if test="${sessionScope.login.role == 'student'}">
                 <h1>Welcome back student <%= ((MyUser) request.getSession().getAttribute("login")).getName()%></h1>
-                <h2>Election is starting at <%= new Date(Config.getStartTimestamp() * 1000L)%></h2>
+                
+                <c:if test="<%= Config.electionStarted() && !Config.electionEnded()%>">  
+                    <h2>Election has started. Start voting! (<%= Config.electionHoursLeft() %> hours left to vote)</h2>
+                    <a class="btn btn-primary" href="student/vote_homepage.jsp" >Vote now</a>
+                </c:if>
+                <c:if test="<%= !Config.electionStarted() %>">  
+                    <h2>Election will be starting at <%= new Date(Config.getStartTimestamp() * 1000L)%></h2>
+                    <a class="btn btn-primary disabled" href="student/vote_homepage.jsp" >Vote now</a>
+                </c:if>
+                <c:if test="<%= Config.electionEnded()%>">  
+                    <h2>Election has ended. Thank you.</h2>
+                    <a class="btn btn-primary" href="" >Results</a>
+                </c:if>
 
-                <a class="btn btn-primary" href="student/vote_homepage.jsp">Vote now</a>
             </c:if>
 
 

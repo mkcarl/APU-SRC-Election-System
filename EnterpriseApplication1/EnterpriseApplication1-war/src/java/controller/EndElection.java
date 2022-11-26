@@ -6,8 +6,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
@@ -22,8 +20,8 @@ import model.Config;
  *
  * @author munky
  */
-@WebServlet(name = "ChangeElectionDate", urlPatterns = {"/committee/ChangeElectionDate"})
-public class ChangeElectionDate extends HttpServlet {
+@WebServlet(name = "EndElection", urlPatterns = {"/committee/EndElection"})
+public class EndElection extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,24 +35,17 @@ public class ChangeElectionDate extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String newdate = request.getParameter("newdate");
-        // yyyy-mm-dd
-        try{
-            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(newdate);
-            
-            Date now = new Date(LocalDateTime.now().toLocalDate().atStartOfDay().toEpochSecond(ZoneOffset.ofHours(8)) * 1000L);
-            
-            if (now.after(date)) {
-                request.getSession().setAttribute("message", String.format("Date not changed. Please select a date AFTER %s", new SimpleDateFormat("dd-MM-yyyy").format(now)));
-                throw new Exception();
-            }
-            
-            Config.setStartTimestamp(date.getTime()/1000);
-        } catch(Exception e){
-            System.out.println(e);
-        } finally{
-            request.getRequestDispatcher("../election_date.jsp").include(request, response);
-        }
+        
+        long electionStart = Config.getStartTimestamp();
+        System.out.println(String.format("current duration is %d s", Config.getDuration()));
+        long now = new Date().getTime() / 1000;
+        long duration = now - electionStart - 1; 
+        
+        
+        Config.setDuration(duration);
+        
+        request.getRequestDispatcher("/election_date.jsp").include(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
