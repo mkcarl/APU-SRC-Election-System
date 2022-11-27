@@ -31,6 +31,9 @@
             .center{
                 text-align: center;
             }
+            .error-msg{
+                color: red; 
+            }
         </style>
     </head>
     <body>
@@ -78,6 +81,7 @@
                 <h1>Seat registration</h1>
                 <p>Please select a seat to contest for.</p>
                 <p>Note : You can only choose one position, and you cannot change your choice afterwards!</p>
+                <p class="error-msg">${requestScope.error}</p>
                 <div class="positions">
                     <form >
                         <c:forEach var="pos" items="${all_position.rows}">

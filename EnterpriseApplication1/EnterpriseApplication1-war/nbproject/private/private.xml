@@ -4,14 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/web/homepage.jsp</file>
-            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/web/student/already_voted.jsp</file>
-            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/web/student/vote_homepage.jsp</file>
-            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/web/committee/contestant.jsp</file>
-            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/web/student/vote_candidates.jsp</file>
-            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/web/banner.jsp</file>
-            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/src/java/controller/ChangeElectionDate.java</file>
-            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/src/java/controller/VotePosition.java</file>
-            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/src/java/controller/CastVote.java</file>
+            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/web/results.jsp</file>
+            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/web/view_results.jsp</file>
+            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/src/java/controller/ElectionProgress.java</file>
+            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/web/election_date.jsp</file>
         </group>
     </open-files>
 </project-private>

@@ -54,12 +54,15 @@ public class RegisterPosition extends HttpServlet {
         if (login.getRole().equals("contestant")){
             if (seatFacade.userAlreadyRegistered(login)) {
                 System.out.println("User already registered!");
-                
+                request.setAttribute("error", "You have already registered!");
+                request.getRequestDispatcher("register_seat.jsp").include(request, response);
                 return;
             }
             
             if (seatFacade.seatsWithPosition(targetPosition).size() >= targetPosition.getNumberOfAvailableSeats()){
                 System.out.println("No more seats available for this position");
+                request.setAttribute("error", "No more seats available for this position");
+                request.getRequestDispatcher("register_seat.jsp").include(request, response);
                 return;
             }
             
