@@ -26,7 +26,7 @@
             .center {
                 text-align: center;
             }
-            .message{
+            .error-msg{
                 color: red;
             }
         </style>
@@ -63,15 +63,7 @@
                 </form>
             
             </c:if>
-            <%
-                if(request.getSession().getAttribute("message") != null){
-                %>
-                <p class="message"><%=request.getSession().getAttribute("message")%></p>
-
-                <%
-                request.getSession().removeAttribute("message");
-                }
-                %>
+            <p class="error-msg">${requestScope.error}</p>
         </div>
     </body>
 </html>

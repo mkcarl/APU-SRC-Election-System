@@ -42,7 +42,7 @@
                 display: flex; 
                 justify-content: space-between;
             }
-            .message{
+            .error-msg{
                 color: red;
             }
         </style>
@@ -67,26 +67,20 @@
                 <div class="controls">
                     <form >
                         <div id="actions">
-                            <input id="id" name="id" type="text" class="form-control" placeholder="eg: comm1">
+                            <input id="id" name="id" type="text" class="form-control" placeholder="Contestant ID">
                             <a type="button" class="btn btn-success" href="add_contestant.jsp">Add</a>
                             <button type="submit" class="btn btn-warning" formaction="EditContestant" formmethod="POST">Edit</button>
                             <button type="submit" class="btn btn-danger" formaction="DeleteContestant" formmethod="POST">Delete</button>
                         </div>
+                        <p class="error-msg">${requestScope.error}</p>
 
-                        <%                            if (request.getSession().getAttribute("message") != null) {
-                        %>
-                        <p class="message"><%=request.getSession().getAttribute("message")%></p>
-
-                        <%
-                                request.getSession().removeAttribute("message");
-                            }
-                        %>
+                        
                     </form>
 
 
                     <form >
                         <div id="actions">
-                            <input id="action-input" name="username" type="text" class="form-control" placeholder="eg: comm1">
+                            <input id="action-input" name="username" type="text" class="form-control" placeholder="Search By Username">
                             <!--                        <select>
                                                         <option value="id">ID</option>
                                                         <option value="username">Username</option>

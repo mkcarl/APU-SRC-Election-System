@@ -40,19 +40,25 @@ public class EditStudent extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-        long id = Long.parseLong(request.getParameter("id"));
-        System.out.println(String.format("id is %d", id));
-        MyUser found = myUserFacade.find(id);
-        // TODO : implement find by role 
+        try{
+            long id = Long.parseLong(request.getParameter("id"));
+            System.out.println(String.format("id is %d", id));
+            MyUser found = myUserFacade.find(id);
+            // TODO : implement find by role 
 
-        if (found != null) {
-            session.setAttribute("edit", found);
-            request.getRequestDispatcher("edit_student.jsp").include(request, response);
+            if (found != null) {
+                session.setAttribute("edit", found);
+                request.getRequestDispatcher("edit_student.jsp").include(request, response);
 
-        } else {
-            session.setAttribute("message", String.format("User with ID \"%d\" not found ", id));
+            } else {
+                session.setAttribute("message", String.format("User with ID \"%d\" not found ", id));
+                request.getRequestDispatcher("student.jsp").include(request, response);
+
+            }
+            
+        } catch (Exception e){
+            request.setAttribute("error", "Please a valid student ID");
             request.getRequestDispatcher("student.jsp").include(request, response);
-
         }
     }
 

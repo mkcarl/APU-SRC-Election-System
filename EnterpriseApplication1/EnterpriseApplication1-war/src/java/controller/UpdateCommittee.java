@@ -38,24 +38,35 @@ public class UpdateCommittee extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        long id = Long.parseLong(request.getParameter("id")) ;
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String fullname = request.getParameter("name");
-        String email = request.getParameter("email");
-        char gender = request.getParameter("gender").charAt(0);
-        
-        MyUser edited = myUserFacade.find(id);
-        
-        edited.setUsername(username);
-        edited.setPassword(password);
-        edited.setName(fullname);
-        edited.setEmail(email);
-        edited.setGender(gender);
-        
-        myUserFacade.edit(edited);
+        try{
+            long id = Long.parseLong(request.getParameter("id")) ;
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            String fullname = request.getParameter("name");
+            String email = request.getParameter("email");
+            char gender = request.getParameter("gender").charAt(0);
 
-        request.getRequestDispatcher("committee.jsp").forward(request, response);
+            gender = Character.toUpperCase(gender);
+
+            if (Character.compare(gender, 'M') != 0 && Character.compare(gender, 'F') != 0) throw new Exception();
+
+            MyUser edited = myUserFacade.find(id);
+
+            edited.setUsername(username);
+            edited.setPassword(password);
+            edited.setName(fullname);
+            edited.setEmail(email);
+            edited.setGender(gender);
+
+            myUserFacade.edit(edited);
+
+            request.getRequestDispatcher("committee.jsp").forward(request, response);
+        }catch (Exception e){
+            request.setAttribute("id", request.getParameter("id"));
+            request.setAttribute("error", "Invalid input. Please try again");
+
+            request.getRequestDispatcher("/committee/EditCommittee").forward(request, response);
+        }
 
     }
 

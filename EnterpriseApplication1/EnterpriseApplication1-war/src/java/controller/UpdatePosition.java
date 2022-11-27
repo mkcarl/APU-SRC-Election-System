@@ -38,21 +38,28 @@ public class UpdatePosition extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        try{
+            long id = Long.parseLong(request.getParameter("id"));
+            String name = request.getParameter("name");
+            String description = request.getParameter("description");
+            int seats = Integer.parseInt(request.getParameter("seats"));
 
-        long id = Long.parseLong(request.getParameter("id"));
-        String name = request.getParameter("name");
-        String description = request.getParameter("description");
-        int seats = Integer.parseInt(request.getParameter("seats"));
+            Position edit = positionFacade.find(id);
 
-        Position edit = positionFacade.find(id);
-        
-        edit.setName(name);
-        edit.setDescription(description);
-        edit.setNumberOfAvailableSeats(seats);
-        
-        positionFacade.edit(edit);
-        
-        request.getRequestDispatcher("position.jsp").forward(request, response);
+            edit.setName(name);
+            edit.setDescription(description);
+            edit.setNumberOfAvailableSeats(seats);
+
+            positionFacade.edit(edit);
+
+            request.getRequestDispatcher("position.jsp").forward(request, response);
+            
+        } catch (Exception e){
+            request.setAttribute("id", request.getParameter("id"));
+            request.setAttribute("error", "Invalid input. Please try again");
+
+            request.getRequestDispatcher("/committee/EditPosition").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

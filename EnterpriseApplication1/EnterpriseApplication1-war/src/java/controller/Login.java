@@ -52,7 +52,7 @@ public class Login extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             HttpSession session = request.getSession();
             if (found == null) {
-                session.setAttribute("message", "Invalid login. Please try again.");
+                request.setAttribute("error", "User not found. Please try again.");
                 request.getRequestDispatcher("login.jsp").include(request, response);
                 return;
             }
@@ -63,7 +63,8 @@ public class Login extends HttpServlet {
                 session.setAttribute("login", found);
                 request.getRequestDispatcher("homepage.jsp").include(request, response);
             } else {
-                session.setAttribute("message", "Invalid login. Please try again");
+                request.setAttribute("error", "Invalid credentials. Please try again.");
+                request.getRequestDispatcher("login.jsp").include(request, response);
                 request.getRequestDispatcher("login.jsp").include(request, response);
             }
 

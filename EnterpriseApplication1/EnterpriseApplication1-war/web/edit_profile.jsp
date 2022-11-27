@@ -37,7 +37,7 @@
                 font-size: 125%;
             }
 
-            .message{
+            .error-msg{
                 color: red;
             }
         </style>
@@ -62,7 +62,7 @@
                 <label for="major" class="form-label">Major:</label>
                 <input id="major" name="major" type="text" class="form-control" value="${login.major}">
                 <label for="yob" class="form-label">Year of Birth:</label>
-                <input id="yob" name="yob" type="text" class="form-control" value="${login.yearOfBirth}">  
+                <input id="yob" name="yob" type="number" class="form-control" value="${login.yearOfBirth}">  
 
                 <c:if test="${login.role == 'contestant'}">
                     <label for="skill" class="form-label">Skills:</label>
@@ -72,17 +72,8 @@
                     
                 </c:if>
                                
-
-                <%
-                    if (request.getSession().getAttribute("message") != null) {
-                %>
-                <p class="message"><%=request.getSession().getAttribute("message")%></p>
-
-                <%
-                        request.getSession().removeAttribute("message");
-                    }
-                %>
-
+                    <p class="error-msg">${requestScope.error}</p>
+                        
                 <div>
                     <a class="btn btn-secondary" href="homepage.jsp">Cancel</a>
                     <button type="submit" class="btn btn-primary" name="id" value="${login.id}">Save</button>
@@ -94,6 +85,6 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
-    </body>>Hello World!</h1>
+    </body>
 </body>
 </html>

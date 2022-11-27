@@ -7,6 +7,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Objects;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,18 +41,27 @@ public class DeleteCommittee extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-
-        long id = Long.parseLong(request.getParameter("id"));
-        MyUser found = myUserFacade.find(id);
-
-        if (found == null) {
-            session.setAttribute("message", String.format("User with ID \"%d\" not found ", id));
-
-        } else {
+        MyUser login = (MyUser)session.getAttribute("login");
+        try{
+            long id = Long.parseLong(request.getParameter("id"));
+            MyUser found = myUserFacade.find(id);
+            
+            if (Objects.equals(found.getId(), login.getId())){
+                throw new Exception();
+            }
             myUserFacade.remove(found);
-
+            request.getRequestDispatcher("committee.jsp").include(request, response);
+            
+        } catch (NumberFormatException e){
+            request.setAttribute("error", "Please a valid committee ID");
+            request.getRequestDispatcher("committee.jsp").include(request, response);
+        } catch (NullPointerException e){
+            request.setAttribute("error", String.format("User with ID \"%s\" not found ", request.getParameter("id")));
+            request.getRequestDispatcher("committee.jsp").include(request, response);
+        } catch (Exception e){
+            request.setAttribute("error", "Cannot delete own account");
+            request.getRequestDispatcher("committee.jsp").include(request, response);
         }
-        request.getRequestDispatcher("committee.jsp").include(request, response);
 
     }
 

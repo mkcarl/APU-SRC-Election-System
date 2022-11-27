@@ -36,7 +36,7 @@
                 font-size: 125%;
             }
 
-            .message{
+            .error-msg{
                 color: red;
             }
         </style>
@@ -69,15 +69,7 @@
                 <label for="manifesto" class="form-label">Manifesto:</label>
                 <textarea id="manifesto" name="manifesto" type="text" class="form-control" rows="3">${edit.manifesto}</textarea>
 
-                <%
-                    if (request.getSession().getAttribute("message") != null) {
-                %>
-                <p class="message"><%=request.getSession().getAttribute("message")%></p>
-
-                <%
-                        request.getSession().removeAttribute("message");
-                    }
-                %>
+                <p class="error-msg">${requestScope.error}</p>
 
                 <div class="submit-div">
                     <button type="submit" class="btn btn-primary" formaction="UpdateContestant" formmethod="POST" name="id" value="${edit.id}">Confirm</button>

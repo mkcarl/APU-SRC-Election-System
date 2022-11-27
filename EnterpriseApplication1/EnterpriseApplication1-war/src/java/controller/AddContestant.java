@@ -39,30 +39,40 @@ public class AddContestant extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String fullname = request.getParameter("name");
-        String email = request.getParameter("email");
-        char gender = request.getParameter("gender").charAt(0);
-        String major = request.getParameter("major");
-        int yob = Integer.parseInt(request.getParameter("yob"));
-        String skill = request.getParameter("skill");
-        String manifesto = request.getParameter("manifesto");
+        try{
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            String fullname = request.getParameter("name");
+            String email = request.getParameter("email");
+            char gender = request.getParameter("gender").charAt(0);
+            String major = request.getParameter("major");
+            int yob = Integer.parseInt(request.getParameter("yob"));
+            String skill = request.getParameter("skill");
+            String manifesto = request.getParameter("manifesto");
+            
+            gender = Character.toUpperCase(gender);
 
-        HttpSession session = request.getSession();
+            if (Character.compare(gender, 'M') != 0 && Character.compare(gender, 'F') != 0) throw new Exception();
+            
+            HttpSession session = request.getSession();
 
-        if (myUserFacade.findUsername(username) != null) {
-            // username taken
-            session.setAttribute("message", String.format("Username \"%s\" already exist, please try again with another username", username));
+            if (myUserFacade.findUsername(username) != null) {
+                // username taken
+                request.setAttribute("error", String.format("Username \"%s\" already exist, please try again with another username", username));
+                request.getRequestDispatcher("add_contestant.jsp").include(request, response);
+
+            } else {
+                MyUser newUser = new MyUser(username, password, fullname, email, major, gender, yob, "contestant", manifesto, skill);
+
+                myUserFacade.create(newUser);
+
+                request.getRequestDispatcher("contestant.jsp").forward(request, response);
+
+            }
+            
+        }catch(Exception e){
+            request.setAttribute("error", "Invalid input. Please try again.");
             request.getRequestDispatcher("add_contestant.jsp").include(request, response);
-
-        } else {
-            MyUser newUser = new MyUser(username, password, fullname, email, major, gender, yob, "contestant", manifesto, skill);
-
-            myUserFacade.create(newUser);
-
-            request.getRequestDispatcher("contestant.jsp").forward(request, response);
-
         }
     }
 

@@ -39,27 +39,40 @@ public class Registration extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String fullname = request.getParameter("name");
-        String email = request.getParameter("email");
-        char gender = request.getParameter("gender").charAt(0);
-        String major = request.getParameter("major");
-        int yob = Integer.parseInt(request.getParameter("yob"));
         
-        MyUser newUser = null;
-        if (request.getParameter("submit").equals("student")){
-            newUser = new MyUser(username, password, fullname, email, major, gender, yob, "student", null, null);
-        } else if (request.getParameter("submit").equals("contestant")){
-            newUser = new MyUser(username, password, fullname, email, major, gender, yob, "contestant", null, null);
+        try{
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            String fullname = request.getParameter("name");
+            String email = request.getParameter("email");
+            char gender = request.getParameter("gender").charAt(0);
+            String major = request.getParameter("major");
+            int yob = Integer.parseInt(request.getParameter("yob"));
+            
+            gender = Character.toUpperCase(gender);
+            
+            if (Character.compare(gender, 'M') != 0 && Character.compare(gender, 'F') != 0) throw new Exception();
 
+            MyUser newUser = null;
+            if (request.getParameter("submit").equals("student")){
+                newUser = new MyUser(username, password, fullname, email, major, gender, yob, "student", null, null);
+            } else if (request.getParameter("submit").equals("contestant")){
+                newUser = new MyUser(username, password, fullname, email, major, gender, yob, "contestant", null, null);
+
+            }
+
+            if (newUser != null) myUserFacade.create(newUser);  
+
+            request.setAttribute("success", String.format("Successfully registered for %s. You may log in now.", username));
+
+            request.getRequestDispatcher("login.jsp").include(request, response);
+            
+        } catch(Exception e){
+            request.setAttribute("error", "Invalid input. Please try again.");
+
+            request.getRequestDispatcher("registration.jsp").include(request, response);
         }
         
-        if (newUser != null) myUserFacade.create(newUser);  
-        
-        session.setAttribute("success", String.format("Successfully registered for %s. You may log in now.", username));
-        request.getRequestDispatcher("login.jsp").include(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

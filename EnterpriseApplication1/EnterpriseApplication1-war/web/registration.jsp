@@ -45,6 +45,7 @@
         <div class="center">
             
             <h1>Registration page</h1>
+            <p class="message">${requestScope.error}</p>
             <form action="Registration" method="POST">
                 <label for="username" class="form-label">Username:</label>
                 <input id="username" name="username" type="text" class="form-control">
@@ -59,18 +60,9 @@
                 <label for="major" class="form-label">Major:</label>
                 <input id="major" name="major" type="text" class="form-control">
                 <label for="yob" class="form-label">Year of Birth:</label>
-                <input id="yob" name="yob" type="text" class="form-control">
+                <input id="yob" name="yob" type="number" class="form-control">
                 
-                <%
-                if(request.getSession().getAttribute("message") != null){
-                %>
-                <p class="message"><%=request.getSession().getAttribute("message")%></p>
-
-                <%
-                request.getSession().removeAttribute("message");
-                }
-                %>
-                    
+                  
                 <div class="submit-div">
                     <button type="submit" name="submit" value="student" class="btn btn-primary">Register as student</button>
                     <button type="submit" name="submit" value="contestant" class="btn btn-primary">Register as contestant</button>

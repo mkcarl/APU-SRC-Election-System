@@ -36,7 +36,7 @@
                 font-size: 125%;
             }
             
-            .message{
+            .error-msg{
                 color: red;
             }
         </style>
@@ -61,15 +61,7 @@
                 <label for="gender" class="form-label">Gender:</label>
                 <input id="gender" name="gender" type="text" class="form-control" value="${edit.gender}">
                                 
-                <%
-                if(request.getSession().getAttribute("message") != null){
-                %>
-                <p class="message"><%=request.getSession().getAttribute("message")%></p>
-
-                <%
-                request.getSession().removeAttribute("message");
-                }
-                %>
+                <p class="error-msg">${requestScope.error}</p>
                     
                 <div class="submit-div">
                     <button type="submit" class="btn btn-primary" formaction="UpdateCommittee" formmethod="POST" name="id" value="${edit.id}">Confirm</button>

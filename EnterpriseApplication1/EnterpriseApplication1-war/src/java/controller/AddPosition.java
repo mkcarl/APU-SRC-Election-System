@@ -40,28 +40,33 @@ public class AddPosition extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        String name = request.getParameter("name");
-        String description = request.getParameter("description");
-        int seats = Integer.parseInt(request.getParameter("seats"));
+        try{
+            String name = request.getParameter("name");
+            String description = request.getParameter("description");
+            int seats = Integer.parseInt(request.getParameter("seats"));
 
-        HttpSession session = request.getSession();
+            HttpSession session = request.getSession();
 
-        if (positionFacade.findPositionName(name) != null) {
-            // name
-            session.setAttribute("message", String.format("Position \"%s\" already exist, please try again with another position", name));
-            request.getRequestDispatcher("add_position.jsp").include(request, response);
+            if (positionFacade.findPositionName(name) != null) {
+                // name
+                session.setAttribute("error", String.format("Position \"%s\" already exist, please try again with another position", name));
+                request.getRequestDispatcher("add_position.jsp").include(request, response);
 
-        } else {
-            Position newPos = new Position();
-            newPos.setName(name);
-            newPos.setDescription(description);
-            newPos.setNumberOfAvailableSeats(seats);
+            } else {
+                Position newPos = new Position();
+                newPos.setName(name);
+                newPos.setDescription(description);
+                newPos.setNumberOfAvailableSeats(seats);
+
+                positionFacade.create(newPos);
+
+                request.getRequestDispatcher("position.jsp").forward(request, response);
+
+            }
             
-            positionFacade.create(newPos);
-
-            request.getRequestDispatcher("position.jsp").forward(request, response);
-
+        } catch(Exception e){
+            request.setAttribute("error", "Invalid input. Please try again.");
+            request.getRequestDispatcher("add_position.jsp").include(request, response);
         }
     }
 

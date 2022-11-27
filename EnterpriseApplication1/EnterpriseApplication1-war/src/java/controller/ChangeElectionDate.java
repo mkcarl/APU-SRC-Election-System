@@ -45,12 +45,13 @@ public class ChangeElectionDate extends HttpServlet {
             Date now = new Date(LocalDateTime.now().toLocalDate().atStartOfDay().toEpochSecond(ZoneOffset.ofHours(8)) * 1000L);
             
             if (now.after(date)) {
-                request.getSession().setAttribute("message", String.format("Date not changed. Please select a date AFTER %s", new SimpleDateFormat("dd-MM-yyyy").format(now)));
+                request.setAttribute("error", String.format("Date not changed. Please select a date AFTER %s", new SimpleDateFormat("dd-MM-yyyy").format(now)));
                 throw new Exception();
             }
             
             Config.setStartTimestamp(date.getTime()/1000);
         } catch(Exception e){
+            request.setAttribute("error", "Error occured.");
             System.out.println(e);
         } finally{
             request.getRequestDispatcher("../election_date.jsp").include(request, response);

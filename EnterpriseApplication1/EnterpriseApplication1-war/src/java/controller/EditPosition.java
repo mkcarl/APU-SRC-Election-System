@@ -41,21 +41,25 @@ public class EditPosition extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        
         HttpSession session = request.getSession();
-        long id = Long.parseLong(request.getParameter("id"));
-        System.out.println(String.format("id is %d", id));
-        Position found = positionFacade.find(id);
-        // TODO : implement find by role 
+        try{
+            long id = Long.parseLong(request.getParameter("id"));
+            System.out.println(String.format("id is %d", id));
+            Position found = positionFacade.find(id);
+            // TODO : implement find by role 
 
-        if (found != null) {
-            session.setAttribute("edit", found);
-            request.getRequestDispatcher("edit_position.jsp").include(request, response);
+            if (found != null) {
+                session.setAttribute("edit", found);
+                request.getRequestDispatcher("edit_position.jsp").include(request, response);
 
-        } else {
-            session.setAttribute("message", String.format("Position with ID \"%d\" not found ", id));
+            } else {
+                session.setAttribute("message", String.format("Position with ID \"%d\" not found ", id));
+                request.getRequestDispatcher("position.jsp").include(request, response);
+
+            }
+        } catch (Exception e){
+            request.setAttribute("error", "Please a valid Position ID");
             request.getRequestDispatcher("position.jsp").include(request, response);
-
         }
     }
 

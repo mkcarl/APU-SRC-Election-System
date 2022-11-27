@@ -35,11 +35,11 @@
                 font-size: 125%;
             }
 
-            .message{
+            .error-msg{
                 color: red;
             }
             
-            .success{
+            .success-msg{
                 color: green;
             }
         </style>
@@ -64,16 +64,9 @@
                 <label for="password" class="form-label">Password:</label>
                 <input id="password" name="password" type="password" class="form-control">
 
+                <p class="error-msg">${requestScope.error}</p>
+                <p class="success-msg">${requestScope.success}</p>
                 
-                <%
-                    if (request.getSession().getAttribute("message") != null) {
-                %>
-                <p class="message"><%=request.getSession().getAttribute("message")%></p>
-
-                <%
-                        request.getSession().removeAttribute("message");
-                    }
-                %>
 
                 <div class="submit-div">
                     <button type="submit" class="btn btn-primary" >Login</button>

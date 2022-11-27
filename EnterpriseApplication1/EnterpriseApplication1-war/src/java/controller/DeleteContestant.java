@@ -40,18 +40,27 @@ public class DeleteContestant extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
+        
+        try{
+            long id = Long.parseLong(request.getParameter("id"));
+            MyUser found = myUserFacade.find(id);
 
-        long id = Long.parseLong(request.getParameter("id"));
-        MyUser found = myUserFacade.find(id);
+            if (found == null) {
+                request.setAttribute("error", String.format("User with ID \"%d\" not found ", id));
 
-        if (found == null) {
-            session.setAttribute("message", String.format("User with ID \"%d\" not found ", id));
+            } else {
+                myUserFacade.remove(found);
 
-        } else {
-            myUserFacade.remove(found);
-
+            }
+            request.getRequestDispatcher("contestant.jsp").include(request, response);
+            
+        }catch (NumberFormatException e){
+            request.setAttribute("error", "Please a valid contestant ID");
+            request.getRequestDispatcher("contestant.jsp").include(request, response);
+        } catch (NullPointerException e){
+            request.setAttribute("error", String.format("User with ID \"%s\" not found ", request.getParameter("id")));
+            request.getRequestDispatcher("contestant.jsp").include(request, response);
         }
-        request.getRequestDispatcher("contestant.jsp").include(request, response);
 
     }
 

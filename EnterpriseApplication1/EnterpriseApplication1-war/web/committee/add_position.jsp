@@ -33,7 +33,7 @@
                 font-size: 125%;
             }
             
-            .message{
+            .error-msg{
                 color: red;
             }
         </style>
@@ -52,15 +52,7 @@
                 <input id="seats" name="seats" type="number" class="form-control">
                 
                 
-                <%
-                if(request.getSession().getAttribute("message") != null){
-                %>
-                <p class="message"><%=request.getSession().getAttribute("message")%></p>
-
-                <%
-                request.getSession().removeAttribute("message");
-                }
-                %>
+                <p class="error-msg">${requestScope.error}</p>
                     
                 <div class="submit-div">
                     <button type="submit" class="btn btn-primary">Add</button>

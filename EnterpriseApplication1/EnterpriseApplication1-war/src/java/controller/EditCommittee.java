@@ -40,18 +40,23 @@ public class EditCommittee extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-        long id = Long.parseLong(request.getParameter("id"));
-        System.out.println(String.format("id is %d", id));
-        MyUser found = myUserFacade.find(id);
+        try{
+            long id = Long.parseLong(request.getParameter("id"));
+            System.out.println(String.format("id is %d", id));
+            MyUser found = myUserFacade.find(id);
 
-        if (found != null) {
-            session.setAttribute("edit", found);
-            request.getRequestDispatcher("edit_committee.jsp").include(request, response);
+            if (found != null) {
+                session.setAttribute("edit", found);
+                request.getRequestDispatcher("edit_committee.jsp").include(request, response);
 
-        } else {
-            session.setAttribute("message", String.format("User with ID \"%d\" not found ", id));
+            } else {
+                request.setAttribute("error", String.format("User with ID \"%d\" not found ", id));
+                request.getRequestDispatcher("committee.jsp").include(request, response);
+
+            }
+        } catch (Exception e){
+            request.setAttribute("error", "Please a valid committee ID");
             request.getRequestDispatcher("committee.jsp").include(request, response);
-
         }
 
     }

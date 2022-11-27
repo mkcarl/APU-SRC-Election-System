@@ -38,28 +38,40 @@ public class UpdateStudent extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        long id = Long.parseLong(request.getParameter("id")) ;
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String fullname = request.getParameter("name");
-        String email = request.getParameter("email");
-        char gender = request.getParameter("gender").charAt(0);
-        String major = request.getParameter("major");
-        int yob = Integer.parseInt(request.getParameter("yob"));
-        
-        MyUser edited = myUserFacade.find(id);
-        
-        edited.setUsername(username);
-        edited.setPassword(password);
-        edited.setName(fullname);
-        edited.setEmail(email);
-        edited.setGender(gender);
-        edited.setMajor(major);
-        edited.setYearOfBirth(yob);
-        
-        myUserFacade.edit(edited);
+        try{
+            long id = Long.parseLong(request.getParameter("id")) ;
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            String fullname = request.getParameter("name");
+            String email = request.getParameter("email");
+            char gender = request.getParameter("gender").charAt(0);
+            String major = request.getParameter("major");
+            int yob = Integer.parseInt(request.getParameter("yob"));
 
-        request.getRequestDispatcher("student.jsp").forward(request, response);
+            gender = Character.toUpperCase(gender);
+            
+            if (Character.compare(gender, 'M') != 0 && Character.compare(gender, 'F') != 0) throw new Exception();
+            
+            MyUser edited = myUserFacade.find(id);
+
+            edited.setUsername(username);
+            edited.setPassword(password);
+            edited.setName(fullname);
+            edited.setEmail(email);
+            edited.setGender(gender);
+            edited.setMajor(major);
+            edited.setYearOfBirth(yob);
+
+            myUserFacade.edit(edited);
+
+            request.getRequestDispatcher("student.jsp").forward(request, response);
+            
+        } catch (Exception e){
+            request.setAttribute("id", request.getParameter("id"));
+            request.setAttribute("error", "Invalid input. Please try again");
+
+            request.getRequestDispatcher("/committee/EditStudent").forward(request, response);
+        }
 
     }
 

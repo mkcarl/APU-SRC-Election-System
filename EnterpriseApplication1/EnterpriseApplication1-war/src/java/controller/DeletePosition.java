@@ -40,18 +40,26 @@ public class DeletePosition extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
+        try{
+            long id = Long.parseLong(request.getParameter("id"));
+            Position found = positionFacade.find(id);
 
-        long id = Long.parseLong(request.getParameter("id"));
-        Position found = positionFacade.find(id);
-        
-        if (found == null) {
-            session.setAttribute("message", String.format("Position with ID \"%d\" not found ", id));
+            if (found == null) {
+                session.setAttribute("message", String.format("Position with ID \"%d\" not found ", id));
 
-        } else {
-            positionFacade.remove(found);
+            } else {
+                positionFacade.remove(found);
 
+            }
+            request.getRequestDispatcher("position.jsp").include(request, response);
+            
+        } catch (NumberFormatException e){
+            request.setAttribute("error", "Please a valid position ID");
+            request.getRequestDispatcher("position.jsp").include(request, response);
+        } catch (NullPointerException e){
+            request.setAttribute("error", String.format("Position with ID \"%s\" not found ", request.getParameter("id")));
+            request.getRequestDispatcher("position.jsp").include(request, response);
         }
-        request.getRequestDispatcher("position.jsp").include(request, response);
 
         
     }

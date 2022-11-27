@@ -20,7 +20,7 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                align-content: center;
+                align-items: center;
                 padding: 0 10rem;
                 height: 90vh;
                 width: 100%;
@@ -52,7 +52,7 @@
                     <a class="btn btn-primary" href="committee/position.jsp">Manage positions</a>                   
                     <a class="btn btn-primary" href="election_date.jsp">Choose election date</a>                
 
-                    <button class="btn btn-primary">Generate report</button>
+                    <!--<button class="btn btn-primary">Generate report</button>-->
 
                 </div>
             </c:if>

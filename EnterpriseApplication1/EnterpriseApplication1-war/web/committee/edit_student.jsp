@@ -36,7 +36,7 @@
                 font-size: 125%;
             }
 
-            .message{
+            .error-msg{
                 color: red;
             }
         </style>
@@ -64,16 +64,7 @@
                 <input id="major" name="major" type="text" class="form-control" value="${edit.major}">
                 <label for="yob" class="form-label">Year of Birth:</label>
                 <input id="yob" name="yob" type="text" class="form-control" value="${edit.yearOfBirth}">                
-
-                <%
-                    if (request.getSession().getAttribute("message") != null) {
-                %>
-                <p class="message"><%=request.getSession().getAttribute("message")%></p>
-
-                <%
-                        request.getSession().removeAttribute("message");
-                    }
-                %>
+                <p class="error-msg">${requestScope.error}</p>
 
                 <div class="submit-div">
                     <button type="submit" class="btn btn-primary" formaction="UpdateStudent" formmethod="POST" name="id" value="${edit.id}">Confirm</button>

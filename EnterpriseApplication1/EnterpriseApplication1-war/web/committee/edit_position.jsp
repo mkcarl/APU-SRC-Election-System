@@ -37,7 +37,7 @@
                 font-size: 125%;
             }
 
-            .message{
+            .error-msg{
                 color: red;
             }
         </style>
@@ -58,15 +58,7 @@
                 <label for="seats" class="form-label">Number of available seats:</label>
                 <input id="seats" name="seats" type="number" class="form-control" value="${edit.numberOfAvailableSeats}">
 
-                <%
-                    if (request.getSession().getAttribute("message") != null) {
-                %>
-                <p class="message"><%=request.getSession().getAttribute("message")%></p>
-
-                <%
-                        request.getSession().removeAttribute("message");
-                    }
-                %>
+                <p class="error-msg">${requestScope.error}</p>
 
                 <div class="submit-div">
                     <button type="submit" class="btn btn-primary" formaction="UpdatePosition" formmethod="POST" name="id" value="${edit.id}">Confirm</button>
