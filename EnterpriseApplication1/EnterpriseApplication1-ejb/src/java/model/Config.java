@@ -14,7 +14,9 @@ import java.util.Date;
  * @author munky
  */
 public class Config {
-    public static long startTimestamp = LocalDateTime.now().plusDays(1).toLocalDate().atStartOfDay().toEpochSecond(ZoneOffset.ofHours(8)); 
+    //public static long startTimestamp = LocalDateTime.now().plusDays(1).toLocalDate().atStartOfDay().toEpochSecond(ZoneOffset.ofHours(8));
+    public static long startTimestamp = LocalDateTime.now().toLocalDate().atStartOfDay().toEpochSecond(ZoneOffset.ofHours(8)); 
+
     public static long duration = 24 * 60 * 60; // in seconds
 
     public static long getStartTimestamp() {
