@@ -6,9 +6,10 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.Config;
 import model.MyUserFacade;
 import model.PositionFacade;
+import model.Vote;
 import model.VoteFacade;
 
 /**
@@ -48,7 +50,7 @@ public class ElectionProgress extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy HH:mm:ss");
         String eStart = sdf.format(new Date(Config.getStartTimestamp() * 1000L));
         String eEnd = sdf.format(new Date((Config.getStartTimestamp() + Config.getDuration()) * 1000L));
         String eDuration = String.format("%d hours %d minutes", Config.getDuration() / 3600, (Config.getDuration() % 3600)/60);
@@ -56,8 +58,11 @@ public class ElectionProgress extends HttpServlet {
         String registeredContestants = String.format("%d", myUserFacade.findByRole("contestant").size());
         String nPosition = String.format("%d", positionFacade.count());
         String percentVoted = String.format("%.2f%%", (float)voteFacade.numberOfUniqueVoters()/(float)myUserFacade.findByRole("student").size()*100);
+        List<Long> voteTimestamps = new ArrayList<>();
 
-        
+        voteFacade.findAll().forEach((v) -> {
+            voteTimestamps.add(v.getTime_voted());
+        });
         
         request.setAttribute("eStart", eStart);
         request.setAttribute("eEnd", eEnd);
@@ -66,7 +71,7 @@ public class ElectionProgress extends HttpServlet {
         request.setAttribute("registeredContestants", registeredContestants);
         request.setAttribute("nPosition", nPosition);
         request.setAttribute("percentageVoted", percentVoted);
-
+        request.setAttribute("voteTimestamps", voteTimestamps);
         
         request.getRequestDispatcher("election_progress.jsp").include(request, response);
     }

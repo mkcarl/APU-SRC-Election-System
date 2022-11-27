@@ -39,9 +39,14 @@
                 text-align: end;
                 font-weight: bold;
             }
-            </style>
+        </style>
     </head>
     <body>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@^3"></script>
+        <script src="https://cdn.jsdelivr.net/npm/moment@^2"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@^1"></script>
+        <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
         <jsp:include page="../banner.jsp"/>
 
         <div class="main">
@@ -74,7 +79,7 @@
                             <td><h3>Number of available positions</h3></td> 
                             <td class="report-value">${requestScope.nPosition}</td> 
                         </tr>
-                        
+
                     </tbody>
                 </table>
                 <h1><u>Statistics</u></h1>
@@ -87,13 +92,63 @@
                     </tbody>
                 </table>
                 <h3>Votes trend graph</h3>
-                <div>shows a graph of number of votes against time</div>
+                <canvas id="myChart"></canvas>
                 <h1><u>Results</u></h1>
                         <jsp:include page="../results.jsp" />
-                
+
 
             </div>
         </div>
+        <script>
+            const ctx = document.getElementById('myChart');
+            const data1 = (${requestScope.voteTimestamps}).map(v => {
+                return {x: v, y: 1}
+            })
+            console.log(data1)
+            const binned = [];
+
+            for (const datum of data1) {
+                const startOfHour = dayjs(datum.x).startOf("hour").valueOf();
+                if (
+                        binned.filter((bin) => bin['x'] === startOfHour).length == 0
+                        ) {
+                    binned.push({x: startOfHour, y: 0});
+                }
+
+                binned.find((bin) => (bin.x == startOfHour)).y += datum.y;
+            }
+            const chart = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    datasets: [
+                        {
+                            label: "No. of Votes",
+                            data: binned,
+                            backgroundColor: "#9BD0F5",
+                        },
+                    ],
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: "timeseries",
+                            time: {
+                                unit: "hour",
+                                unitStepSize: "1",
+                            },
+                        },
+                        y: {
+                            min: 0,
+                            ticks:{
+                                stepSize:1
+                            }
+                        },
+                    },
+                },
+            });
+
+        </script>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
     </body>
