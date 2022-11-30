@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/java/controller/Registration.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>53</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/web/homepage.jsp</file>
             <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/web/results.jsp</file>
             <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/web/view_results.jsp</file>
-            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/src/java/controller/ElectionProgress.java</file>
-            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/web/election_date.jsp</file>
+            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/web/committee/committee.jsp</file>
+            <file>file:/C:/Users/munky/Desktop/APU-SRC-Election-System/EnterpriseApplication1/EnterpriseApplication1-war/web/committee/election_progress.jsp</file>
         </group>
     </open-files>
 </project-private>

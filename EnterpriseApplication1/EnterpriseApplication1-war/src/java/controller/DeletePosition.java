@@ -8,6 +8,7 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -58,6 +59,9 @@ public class DeletePosition extends HttpServlet {
             request.getRequestDispatcher("position.jsp").include(request, response);
         } catch (NullPointerException e){
             request.setAttribute("error", String.format("Position with ID \"%s\" not found ", request.getParameter("id")));
+            request.getRequestDispatcher("position.jsp").include(request, response);
+        } catch(EJBException e){
+            request.setAttribute("error", String.format("Position with ID \"%s\" has already been registered by contestants, cannot delete!", request.getParameter("id")));
             request.getRequestDispatcher("position.jsp").include(request, response);
         }
 

@@ -7,8 +7,8 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,8 +22,8 @@ import model.MyUserFacade;
  *
  * @author munky
  */
-@WebServlet(name = "SearchCommittee", urlPatterns = {"/committee/SearchCommittee"})
-public class SearchCommittee extends HttpServlet {
+@WebServlet(name = "DeleteUser", urlPatterns = {"/committee/DeleteUser"})
+public class DeleteUser extends HttpServlet {
 
     @EJB
     private MyUserFacade myUserFacade;
@@ -41,12 +41,28 @@ public class SearchCommittee extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
+        String role = request.getParameter("role");
+        try{
+            long id = Long.parseLong(request.getParameter("id"));
+            MyUser found = myUserFacade.find(id);
 
-        String username = request.getParameter("username");
-        List<MyUser> all = myUserFacade.findAllCommitteeUsernameSimilarTo(username);
-        session.setAttribute("search", all);
-        request.getRequestDispatcher("committee.jsp").include(request, response);
+            if (found == null) {
+                request.setAttribute("error", String.format("User with ID \"%d\" not found ", id));
 
+            } else {
+                myUserFacade.remove(found);
+            }
+            request.getRequestDispatcher(String.format("%s.jsp", role)).include(request, response);            
+        } catch (NumberFormatException e){
+            request.setAttribute("error", "Please a valid student ID");
+            request.getRequestDispatcher(String.format("%s.jsp", role)).include(request, response);
+        } catch (NullPointerException e){
+            request.setAttribute("error", String.format("User with ID \"%s\" not found ", request.getParameter("id")));
+            request.getRequestDispatcher(String.format("%s.jsp", role)).include(request, response);
+        }catch(EJBException e){
+            request.setAttribute("error", String.format("User with ID \"%s\" already engaged in the election, cannot delete", request.getParameter("id")));
+            request.getRequestDispatcher(String.format("%s.jsp", role)).include(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

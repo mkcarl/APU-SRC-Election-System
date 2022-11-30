@@ -70,7 +70,7 @@
                             <input id="id" name="id" type="text" class="form-control" placeholder="Contestant ID">
                             <a type="button" class="btn btn-success" href="add_contestant.jsp">Add</a>
                             <button type="submit" class="btn btn-warning" formaction="EditContestant" formmethod="POST">Edit</button>
-                            <button type="submit" class="btn btn-danger" formaction="DeleteContestant" formmethod="POST">Delete</button>
+                            <button type="submit" class="btn btn-danger" formaction="DeleteUser" formmethod="POST" name="role" value="contestant">Delete</button>
                         </div>
                         <p class="error-msg">${requestScope.error}</p>
 
@@ -88,7 +88,7 @@
                                                         <option value="gender">Gender</option>
                         
                                                     </select>-->
-                            <button type="submit" class="btn btn-primary" formaction="SearchContestant" formmethod="POST">Search</button>
+                            <button type="submit" class="btn btn-primary" formaction="SearchUser" formmethod="POST" name="role" value="contestant">Search</button>
                         </div>
                     </form>
 

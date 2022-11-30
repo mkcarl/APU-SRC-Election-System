@@ -70,7 +70,7 @@
                             <input id="id" name="id" type="text" class="form-control" placeholder="Student ID">
                             <a type="button" class="btn btn-success" href="add_student.jsp">Add</a>
                             <button type="submit" class="btn btn-warning" formaction="EditStudent" formmethod="POST">Edit</button>
-                            <button type="submit" class="btn btn-danger" formaction="DeleteStudent" formmethod="POST">Delete</button>
+                            <button type="submit" class="btn btn-danger" formaction="DeleteUser" formmethod="POST" name="role" value="student">Delete</button>
                         </div>
 
                         <p class="error-msg">${requestScope.error}</p>
@@ -80,14 +80,7 @@
                     <form >
                         <div id="actions">
                             <input id="action-input" name="username" type="text" class="form-control" placeholder="Search By Username">
-                            <!--                        <select>
-                                                        <option value="id">ID</option>
-                                                        <option value="username">Username</option>
-                                                        <option value="fullname">Full name</option>
-                                                        <option value="gender">Gender</option>
-                        
-                                                    </select>-->
-                            <button type="submit" class="btn btn-primary" formaction="SearchStudent" formmethod="POST">Search</button>
+                            <button type="submit" class="btn btn-primary" formaction="SearchUser" formmethod="POST" name="role" value="student">Search</button>
                         </div>
                     </form>
 
@@ -110,7 +103,7 @@
                         </thead>
                         <tbody>
                             <!--display records from database-->
-                            <c:if test="<%= request.getSession().getAttribute("search") == null%>">
+                            <c:if test="${sessionScope.search == null}">
                                 <sql:query var="all_student" dataSource="${myDS}">
                                     SELECT * FROM myuser WHERE role = 'student'
                                 </sql:query>
@@ -127,7 +120,7 @@
                                         </tr>
                                 </c:forEach>
                             </c:if>
-                            <c:if test="<%= request.getSession().getAttribute("search") != null%>">
+                            <c:if test="${sessionScope.search != null}">
                                 <c:set var="student_list" value="${sessionScope.search}"></c:set>
 
                                 <c:forEach var="student" items="${student_list}">

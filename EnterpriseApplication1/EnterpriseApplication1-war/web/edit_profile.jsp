@@ -50,7 +50,7 @@
             <h1>Edit profile</h1>
             <form action="EditProfile" method="POST">
                 <label for="username" class="form-label">Username:</label>
-                <input id="username" name="username" type="text" class="form-control"  value="${login.username}">
+                <input id="username" name="username" type="text" class="form-control"  value="${login.username}" readonly >
                 <label for="password" class="form-label">Password:</label>
                 <input id="password" name="password" type="text" class="form-control" value="${login.password}" >
                 <label for="name" class="form-label">Full name:</label>

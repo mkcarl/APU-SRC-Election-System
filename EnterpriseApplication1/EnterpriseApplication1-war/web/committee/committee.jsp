@@ -70,7 +70,7 @@
                             <input id="id" name="id" type="text" class="form-control" placeholder="Committee ID">
                             <a type="button" class="btn btn-success" href="add_committee.jsp">Add</a>
                             <button type="submit" class="btn btn-warning" formaction="EditCommittee" formmethod="POST">Edit</button>
-                            <button type="submit" class="btn btn-danger" formaction="DeleteCommittee" formmethod="POST">Delete</button>
+                            <button type="submit" class="btn btn-danger" formaction="DeleteUser" formmethod="POST" name="role" value="committee">Delete</button>
                         </div>
 
                         <p class="error-msg">${requestScope.error}</p>
@@ -87,7 +87,7 @@
                                                         <option value="gender">Gender</option>
                         
                                                     </select>-->
-                            <button type="submit" class="btn btn-primary" formaction="SearchCommittee" formmethod="POST">Search</button>
+                            <button type="submit" class="btn btn-primary" formaction="SearchUser" formmethod="POST" name="role" value="committee">Search</button>
                         </div>
                     </form>
 

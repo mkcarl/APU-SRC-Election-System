@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/EnterpriseApplication1.iml" filepath="$PROJECT_DIR$/.idea/EnterpriseApplication1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EnterpriseApplication1-ejb/src/EnterpriseApplication1-ejb.iml" filepath="$PROJECT_DIR$/EnterpriseApplication1-ejb/src/EnterpriseApplication1-ejb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EnterpriseApplication1-war/src/EnterpriseApplication1-war.iml" filepath="$PROJECT_DIR$/EnterpriseApplication1-war/src/EnterpriseApplication1-war.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EnterpriseApplication1-ejb/build/build.iml" filepath="$PROJECT_DIR$/EnterpriseApplication1-ejb/build/build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EnterpriseApplication1-war/build/build1.iml" filepath="$PROJECT_DIR$/EnterpriseApplication1-war/build/build1.iml" />
+    </modules>
+  </component>
+</project>

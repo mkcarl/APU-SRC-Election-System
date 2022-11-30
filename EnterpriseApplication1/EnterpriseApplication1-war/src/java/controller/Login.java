@@ -26,8 +26,6 @@ public class Login extends HttpServlet {
 
     @EJB
     private MyUserFacade myUserFacade;
-    
-    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,7 +39,7 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
@@ -49,26 +47,24 @@ public class Login extends HttpServlet {
 
         found = myUserFacade.findUsername(username);
 
-        try (PrintWriter out = response.getWriter()) {
-            HttpSession session = request.getSession();
-            if (found == null) {
-                request.setAttribute("error", "User not found. Please try again.");
-                request.getRequestDispatcher("login.jsp").include(request, response);
-                return;
-            }
-            System.out.println(password);
-            System.out.println(found.getPassword());
-            if (password.equals(found.getPassword())) {
-                System.out.println(found.getRole());
-                session.setAttribute("login", found);
-                request.getRequestDispatcher("homepage.jsp").include(request, response);
-            } else {
-                request.setAttribute("error", "Invalid credentials. Please try again.");
-                request.getRequestDispatcher("login.jsp").include(request, response);
-                request.getRequestDispatcher("login.jsp").include(request, response);
-            }
-
+        HttpSession session = request.getSession();
+        if (found == null) {
+            request.setAttribute("error", "User not found. Please try again.");
+            request.getRequestDispatcher("login.jsp").include(request, response);
+            return;
         }
+        System.out.println(password);
+        System.out.println(found.getPassword());
+        if (password.equals(found.getPassword())) {
+            System.out.println(found.getRole());
+            session.setAttribute("login", found);
+            request.getRequestDispatcher("homepage.jsp").include(request, response);
+        } else {
+            request.setAttribute("error", "Invalid credentials. Please try again.");
+            request.getRequestDispatcher("login.jsp").include(request, response);
+            request.getRequestDispatcher("login.jsp").include(request, response);
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

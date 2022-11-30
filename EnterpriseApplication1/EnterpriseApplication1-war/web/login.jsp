@@ -49,15 +49,7 @@
         <div class="center">
 
             <h1>Login page</h1>
-            <%
-                    if (request.getSession().getAttribute("success") != null) {
-                %>
-                <p class="success"><%=request.getSession().getAttribute("success")%></p>
-
-                <%
-                        request.getSession().removeAttribute("success");
-                    }
-                %>
+                <p class="success">${requestScope.success}</p>
             <form action="Login" method="POST">
                 <label for="username" class="form-label">Username:</label>
                 <input id="username" name="username" type="text" class="form-control">

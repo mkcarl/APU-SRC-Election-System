@@ -4,6 +4,7 @@
     Author     : carl
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -24,12 +25,11 @@
             
         </style>
     </head>
-    <body>        
-        <%
-        if (request.getSession().getAttribute("login") != null){
-            response.sendRedirect("homepage.jsp");
-        }
-        %>
+    <body>       
+        <c:if test="${sessionScope.login != null}">
+            <c:redirect url="homepage.jsp"></c:redirect>
+        </c:if>
+        
         <jsp:include page="banner.jsp"/>
         <div class="center">
             <h1>APU SRC is holding their annual election. Come cast your vote!</h1>

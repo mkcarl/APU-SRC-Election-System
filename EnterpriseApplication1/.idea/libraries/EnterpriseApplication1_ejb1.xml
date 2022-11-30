@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="EnterpriseApplication1-ejb1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/build/EnterpriseApplication1-ejb.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
